@@ -38,7 +38,7 @@ def predict_t(h,r):
     
     #print type(h),type(r)
     h_plus_r=np.add(h,r) #store value of h+r
-    print h_plus_r
+    #print h_plus_r
     
     f=open("FB15K/entity2vec.bern","r")
     line_number=0
@@ -53,6 +53,7 @@ def predict_t(h,r):
         t_distance_list[line_number]=euclidean_dist
         line_number=line_number+1
     sorted_t = sorted(t_distance_list.items(), key=operator.itemgetter(1), reverse=True)
+    print sorted_t[0:10]
     return  sorted_t[0:10]   #returns list of line number and distance
     
     
