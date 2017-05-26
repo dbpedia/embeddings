@@ -40,7 +40,7 @@ def predict_t(h,r):
     h_plus_r=np.add(h,r) #store value of h+r
     print h_plus_r
     
-    f=open("/home/nausheenfatma/Summer2017/GSoC_2017/Code/KB2E-master/TransE/FB15kembeddings/entity2vec.bern","r")
+    f=open("FB15K/entity2vec.bern","r")
     line_number=0
     for line in f : #check distance with each entity
         line=line.strip()
@@ -66,7 +66,7 @@ def predict_t(h,r):
 
 ##########Predict##############
 
-f=open("data/test.txt")
+f=open("FB15K/test.txt")
 
 for line in f:
     line=line.strip()
@@ -82,7 +82,7 @@ for line in f:
     
     try:
         #print entity_dict[h_key]+1
-        h_value=linecache.getline('/home/nausheenfatma/Summer2017/GSoC_2017/Code/KB2E-master/TransE/FB15kembeddings/entity2vec.bern', entity_dict[h_key]+1)
+        h_value=linecache.getline('FB15K/entity2vec.bern', entity_dict[h_key]+1)
         print type(h_value)
         list_h_value=[float(i) for i in h_value.split()]
         #print list_h_value
@@ -90,7 +90,7 @@ for line in f:
         
         h=np.asarray(list_h_value)
         
-        r_value=linecache.getline('/home/nausheenfatma/Summer2017/GSoC_2017/Code/KB2E-master/TransE/FB15kembeddings/relation2vec.bern', relation_dict[r_key]+1)
+        r_value=linecache.getline('FB15K/relation2vec.bern', relation_dict[r_key]+1)
         
         list_r_value=[float(i) for i in r_value.split()]
         
@@ -105,7 +105,7 @@ for line in f:
     #r=np.asarray()
     #print h,r
     predict_t(h,r)
-    pp
+    
     
     
 
