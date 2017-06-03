@@ -1,11 +1,11 @@
-TransE Code has been taken from https://github.com/thunlp/KB2E
+TransE Code has been taken from https://github.com/thunlp/KB2E<br><br><br>
 
 
-Commands to run the code:
+Commands to run the code:<br><br><br>
 
-1)make 
-2)./Train_TransE
-3)./Test_TransE "bern"
+make <br>
+./Train_TransE<br>
+./Test_TransE "bern"<br><br><br>
 
 
 Note : data files should be stored in "../data" path
