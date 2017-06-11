@@ -8,7 +8,7 @@ Firstly, `python WikiDetector.py enwiki-20170520-pages-articles.xml` modifies th
 `python WikiTrainer.py output` trains Word2Vec embeddings using the plain text articles.
 
 ## Workflow
-1. WikiDetector.py (replaceAnchorText)
+### 1. WikiDetector.py (replaceAnchorText)
 
   1.1. For each article in the Wikipedia Dump, a 'local' dictionary is generated with the entity as the key and a list of surface forms as the values. 
 `Dictionary[entity] = [surfaceForms1, surfaceForm2,...]`
@@ -19,7 +19,7 @@ Trailing parantheses are removed from the surface forms, each entity name is cap
   While substituting the entity name string 'entity/' is appended at the beginning.
 `"These are often described as [[stateless society|entity/Stateless_society]] and it is in a entity/Stateless_society..."`
 
-2. WikiDetector.py (replaceSurfaceForms)
+### 2. WikiDetector.py (replaceSurfaceForms)
 
   2.1. replaceSurfaceForms generates a 'global' dictionary using all the anchor text in the Wikipedia Dump file.
   
@@ -31,10 +31,10 @@ Trailing parantheses are removed from the surface forms, each entity name is cap
 
   The replacement is possible since, in some other article entity/Barack_Obama has the anchor text 'Obama' and this pair was stored in the 'global' dictionary.
   
-`"[[entity/Barack_Obama]] is the president of the .. When entity/Barack_Obama did..."
+`"[[entity/Barack_Obama]] is the president of the .. When entity/Barack_Obama did..."`
 
-3. WikiExtractor.py
+### 3. WikiExtractor.py
 This python file clears xml markup from the Wikipedia Dump and retains clean text.
 
-4. WikiTrainer.py
+### 4. WikiTrainer.py
 Using the plain text generated using the WikiExtractor.py, Word2Vec embeddings can be trained.
