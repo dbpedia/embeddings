@@ -22,10 +22,15 @@ Trailing parantheses are removed from the surface forms, each entity name is cap
 2. WikiDetector.py (replaceSurfaceForms)
 
   2.1. replaceSurfaceForms generates a 'global' dictionary using all the anchor text in the Wikipedia Dump file.
+  
   2.2. A list of all the linked entities for a specific article is generated.
+  
   2.3. All the surface forms in the 'global' dictionary are replaced by their corresponding entities. For example the text:
+  
 `"[[Barack Obama]] is the president of the... When Obama did..."`
+
   The replacement is possible since, in some other article entity/Barack_Obama has the anchor text 'Obama' and this pair was stored in the 'global' dictionary.
+  
 `"[[entity/Barack_Obama]] is the president of the .. When entity/Barack_Obama did..."
 
 3. WikiExtractor.py
