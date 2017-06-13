@@ -3,6 +3,8 @@ import re
 import sys
 import shutil
 import time
+import tempfile
+from joblib import Parallel, delayed
 
 file = sys.argv[1]
 
@@ -32,56 +34,47 @@ def makeDictionary(fileName):
 	return diction
 
 def replaceAnchorText(filename):
-	start_time = time.time()
-	counter = 0
-	avoid = ['The', 'the', 'a', 'A']
-	with open("updatedWiki", '+w',  encoding="utf8") as output:
-		with open(filename, 'r',  encoding="utf8") as corpus:
-			title = ''
-			localDictionary = {}#stores the entites and present in an article as they appear
-			for line in corpus:
-				if line.startswith('    <title>'):
-					title = line.strip('    <title>').rstrip('</title>\n')
-					counter += 1
-					print(str(counter) + ". " + title.replace(' ', '_') + " (" + str(counter/(time.time() - start_time)) + " articles/s)")
-					localDictionary = {}#reset the local dictionary for every article
-					localDictionary[title.replace(' ', '_')] = [title]
-				elif not title == '':
-					links = re.findall(r"\[\[([^\{\}\:\]\[]+)\|([^\{\}\]\[]+)\]\]", line)
-					for link in links:
+	print(filename)
 
-						entity = upcase_first_letter(link[0]).replace(' ', '_')
-						surfaceForm = link[1].replace("'''", "").replace("''", "").split(' (')[0]
+	#create a temporary file
+	t = tempfile.NamedTemporaryFile(mode = "r+")
+	dictionary = {}
 
-						if entity not in localDictionary:
-							localDictionary[entity] = []
-						if surfaceForm not in localDictionary[entity]:
-							localDictionary[entity].append(surfaceForm)
-					singleLinks = re.findall(r"\[\[([^\{\}\:\]\[\|]+)\]\]", line)
+	with open(filename, 'r') as fil:
+		for line in fil:
+			if line.startswith("<doc id"):
+				title = next(fil).rstrip('\n')
+				# print(title)
+				dictionary = {}
+				dictionary[title.replace(' ', '_')] = [title]
+				continue
+			elif not line == '\n':
+				links = re.findall(r'\<a href\=\"([^\"\:]+)\"\>([^\<]+)\</a\>', line)
+				for link in links:
+					entity = upcase_first_letter(link[0]).replace('%20','_').replace('%28','(').replace('%29',')')
+					anchor = link[1].split(' (')[0]
+					if entity not in dictionary:
+						dictionary[entity] = []
+					if anchor not in dictionary[entity]:
+						dictionary[entity].append(anchor)
+			line = re.sub('<.*?>', '', line)
+			for entity in dictionary:
+				for surfaceForm in sorted(dictionary[entity], key = len, reverse = True):
+					try:
+						line = re.sub(r"\b%s\b" % surfaceForm,'resource/' + entity, line, flags = re.IGNORECASE)
+					except:
+						# print("Unable to tag: " + surfaceForm + " as " + entity)
+						dictionary[entity].remove(surfaceForm)
+			t.write(line)
 
-					for link in singleLinks:
+	t.seek(0)
 
-						entity = upcase_first_letter(link).replace(' ', '_').replace("'''", "").replace("''", "")
-						surfaceForm = link.replace("'''", "").replace("''", "").split(' (')[0]
+	with open(filename, 'w') as output:
+		for line in t:
+			output.write(line)
 
-						if entity not in localDictionary:
-							localDictionary[entity] = []
-						if surfaceForm not in localDictionary[entity]:
-							localDictionary[entity].append(surfaceForm)
+	t.close()
 
-				# line = re.sub(r"\[\[([^\{\}\:\]\[]+)\|([^\{\}\]\[]+)\]\]", "entity/" + upcase_first_letter(r"\1").replace(' ', '_'), line)
-				# line = re.sub(r"\[\[([^\{\}\:\]\[\|]+)\]\]", "entity/" + upcase_first_letter(r"\1").replace(' ', '_'), line)
-
-				for entity in localDictionary:
-					for surfForm in localDictionary[entity]:
-						if surfForm not in avoid:
-							try:
-								line = re.sub(r"\b%s\b" % surfForm,'entity/' + entity, line, flags = re.IGNORECASE)
-							except:
-								print("Couldn't tag the surface form '" + surfForm + "' as entity/" + entity)
-								localDictionary[entity].remove(surfForm)
-							# print('====' + entity + '====' + surfForm)
-				output.write(line)
 	return None
 
 def replaceSurfaceForms(filename, dictionary):
@@ -105,8 +98,17 @@ def replaceSurfaceForms(filename, dictionary):
 					if entity in dictionary:
 						for surfForm in dictionary[entity]:
 							if surfForm not in avoid:
-								line = re.sub(r"\b%s\b" % surfForm,'resource/' + entity, line, flags = re.IGNORECASE)
+								try:
+									line = re.sub(r"\b%s\b" % surfForm,'resource/' + entity, line, flags = re.IGNORECASE)
+								except:
+									print("Unable to tag: " + surfForm)
 							# print('====' + entity + '====' + surfForm)
 				output.write(line)
 	return None
-replaceAnchorText(file)
+if __name__ == "__main__":
+	directory = sys.argv[1]
+	for root, dirs, files in os.walk(directory):
+		start = time.time()
+		Parallel(n_jobs = 8)(delayed(replaceAnchorText)(root + '/' + file) for file in files)
+		print(str(31*100/(time.time() - start)) + ' articles/s')
+		# replaceAnchorText(file)
