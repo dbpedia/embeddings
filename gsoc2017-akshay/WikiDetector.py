@@ -15,7 +15,7 @@ def makeDictionary(fileName):
 	with open(fileName, 'r') as corpus:
 		start_time = time.time()
 		for line in corpus:
-			links = re.findall("\[\[([^\{\}\:\]\[]+)\|([^\{\}\]\[]+)\]\]", line, re.DOTALL | re.UNICODE)
+			links = re.findall("\[\[([^\{\}\:\]\[]+)\|([^\{\}\]\[]+)\]\]", line)
 			for elem in links:
 				counter += 1
 				# print('Anchor text processed: ' + str(counter), end = '\r')
@@ -32,17 +32,18 @@ def makeDictionary(fileName):
 	return diction
 
 def replaceAnchorText(filename):
+	start_time = time.time()
 	counter = 0
-	avoid = ['The', 'the', 'a', 'A', '*ʼ']
-	with open("updatedWiki", '+w') as output:
-		with open(filename, 'r') as corpus:
+	avoid = ['The', 'the', 'a', 'A']
+	with open("updatedWiki", '+w',  encoding="utf8") as output:
+		with open(filename, 'r',  encoding="utf8") as corpus:
 			title = ''
 			localDictionary = {}#stores the entites and present in an article as they appear
 			for line in corpus:
 				if line.startswith('    <title>'):
 					title = line.strip('    <title>').rstrip('</title>\n')
 					counter += 1
-					print("Articles processed: " + str(counter), end = '\r')
+					print(str(counter) + ". " + title.replace(' ', '_') + " (" + str(counter/(time.time() - start_time)) + " articles/s)")
 					localDictionary = {}#reset the local dictionary for every article
 					localDictionary[title.replace(' ', '_')] = [title]
 				elif not title == '':
@@ -77,7 +78,8 @@ def replaceAnchorText(filename):
 							try:
 								line = re.sub(r"\b%s\b" % surfForm,'entity/' + entity, line, flags = re.IGNORECASE)
 							except:
-								pass
+								print("Couldn't tag the surface form '" + surfForm + "' as entity/" + entity)
+								localDictionary[entity].remove(surfForm)
 							# print('====' + entity + '====' + surfForm)
 				output.write(line)
 	return None
@@ -107,5 +109,4 @@ def replaceSurfaceForms(filename, dictionary):
 							# print('====' + entity + '====' + surfForm)
 				output.write(line)
 	return None
-
 replaceAnchorText(file)
