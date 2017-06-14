@@ -3,7 +3,9 @@
 ## Usage
 Firstly, `python WikiExtractor.py --links -o output enwiki-20170520-pages-articles.xml` clears the xml markup retaining only the links.
 
-`python WikiDetector.py output/` replaces the surface forms using a dictionary local to each article.
+`python MakeDictionary.py output/` generates a dictionary of all the anchor text.
+
+`python WikiDetector.py output/` replaces the surface forms using a dictionary local to each article, while replacing the surface forms of the article entity using the dictionary generated using the previous command. 
 
 `python WikiTrainer.py output` trains Word2Vec embeddings using the plain text articles.
 
