@@ -4,7 +4,6 @@ import multiprocessing
 import os
 import re
 import sys
-from pattern.en import tokenize
 from time import time
 
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
@@ -19,6 +18,7 @@ class MySentences(object):
         self.dirname = dirname
 
     def __iter__(self):
+        punct = '!"#$%&\'()*+,./:;<=>?@[\\]^`{|}~'
         for root, dirs, files in os.walk(self.dirname):
             for filename in files:
                 file_path = root + '/' + filename
@@ -27,9 +27,7 @@ class MySentences(object):
                     if sline == "":
                         continue
                     rline = cleanhtml(sline)
-                    tokenized_line = ' '.join(tokenize(rline))
-                    word_line = [word for word in tokenized_line.lower().split() if word.isalpha()]
-                    yield word_line
+                    yield re.sub(r'[%s]' % punct, '', re.sub(r'resource/', '', rline)).lower().split()
 
 
 data_path = sys.argv[1]
