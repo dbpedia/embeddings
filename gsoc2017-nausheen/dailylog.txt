@@ -1,1 +1,2 @@
-26/10/2017
+26/10/2017:
+*DistMult executed for WN18 and FB15K
