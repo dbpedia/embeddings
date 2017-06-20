@@ -27,4 +27,10 @@ i)  DistMult executed for WN18 and FB15K
 
 To Do:
 Run SSP model.
------------------------------------------------------------------------------
+
+What I did :
+* Tried to run SSP code on Linus Machine, some errors during runtime.
+* SSP documentations says the authors used Intel C++ Compiler on Visual Studio.
+-------------------------------------------------------------------------------
+
+20th June 2017:
