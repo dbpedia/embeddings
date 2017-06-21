@@ -5,9 +5,10 @@ Daily logs for GSoC 2017
 
 Dropbox link for Experiments Excel sheet and screenshots: 
 https://www.dropbox.com/sh/4180ka27eydm5rk/AADU54wB3ofU2N3KBELm3bhYa?dl=0
+
 =============================================================================
 30th May to 15th June 2017:
-
+=============================================================================
 Ran opensource codes for 
 i) TransE
 ii) HolE
@@ -16,24 +17,27 @@ iii) ComplEx
 Pending Issues to fix:
 i) HolE input format for FB15K
 
------------------------------------------------------------------------------
+=============================================================================
 16th June 2017:
-
+=============================================================================
 Done :
 i)  DistMult executed for WN18 and FB15K
 
------------------------------------------------------------------------------
-19th June 2017 :
 
+=============================================================================
+19th June 2017 :
+=============================================================================
 To Do:
 Run SSP model.
 
 What I did :
-* Tried to run SSP code on Linus Machine, some errors during runtime.
+* Tried to run SSP code on Linux Machine, some errors during runtime.
 * SSP documentations says the authors used Intel C++ Compiler on Visual Studio.
--------------------------------------------------------------------------------
 
+
+=============================================================================
 20th June 2017:
+=============================================================================
 What I did :
 * Set up Visual studio and Intel C++ on a Windows machine.
 * Had weekly hangout discussion with the mentors and decided to document and figure out :
@@ -41,7 +45,7 @@ What I did :
     2) space complexity/requirements 
   for various models. 
 
----------------------------------------------------------------------------------
-
+=============================================================================
 21st June 2017:
+=============================================================================
 
