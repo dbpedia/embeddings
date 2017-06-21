@@ -40,10 +40,11 @@ What I did :
 =============================================================================
 What I did :
 * Set up Visual studio and Intel C++ on a Windows machine.
-* Had weekly hangout discussion with the mentors and decided to document and figure out :
+* Had weekly hangout discussion with the mentors and decided to document and 
+figure out :
     1) time complexity 
     2) space complexity/requirements 
-  for various models. 
+for various models. 
 
 =============================================================================
 21st June 2017:
