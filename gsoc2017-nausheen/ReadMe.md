@@ -80,8 +80,8 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
     <th>Time Complexity </th>
     <th>Training time (in hours) </th>
     <th>Loss Function</th>
-    <th>Time Complexity (in hours) </th>
-    <th>Training time</th>
+    <th>Time Complexity </th>
+    <th>Training time (in hours) </th>
   </tr>
   
   
