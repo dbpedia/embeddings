@@ -56,10 +56,14 @@ Unfortunately, it did not execute.
 25th June 2017 :
 =============================================================================
 
-When I check the experiments table, the results of HoLE and ComplEx looks too similar.
+1)  When I check the experiments table, the results of HoLE and ComplEx looks too similar.
 So to gain some more insight, I edited the HoLE code to give Hits@1, Hits@3 and 
 Hits@10 information.
 
 The original code gave only Hits@10 values.
+
+2) The HolE github code did not have the FB15K bin file dataset. I created the bin file for FB15K
+from the benchmark FB15K dataset, and put the code for execution. The bin file was the required 
+input format for running the code.
 
 ==============================================================================
