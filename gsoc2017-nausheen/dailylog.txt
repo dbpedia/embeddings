@@ -47,6 +47,7 @@ figure out :
 for various models. 
 
 =============================================================================
-21st June 2017:
+21st June 2017 to 24th June 2017:
 =============================================================================
-
+Tried to make SSP run on Linux and Windows. 
+Unfortunately, it did not execute.
