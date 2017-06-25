@@ -54,8 +54,7 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
     <tr>
   <td>ComplEx</td>
   <td>0.581</td>
-    <td>0.94</td>
-    
+    <td>0.94</td>    
     <td>0.944</td>
     <td>0.672</td>
         <td>0.235</td>
@@ -71,8 +70,7 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
 
 <table>
 <tr>
-   <th>Model</th>
-   
+   <th>Model</th>  
    <th>Time Complexity </th>
    <th>Space Complexity</th>
     <th colspan="2">WN11 <br></th>
