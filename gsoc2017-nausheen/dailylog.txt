@@ -56,7 +56,7 @@ Unfortunately, it did not execute.
 25th June 2017 :
 =============================================================================
 
-When I check the experiments table, the results of HoLE and ComplEx looks too close.
+When I check the experiments table, the results of HoLE and ComplEx looks too similar.
 So to gain some more insight, I edited the HoLE code to give Hits@1, Hits@3 and 
 Hits@10 information.
 
