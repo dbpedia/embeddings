@@ -62,10 +62,14 @@ Hits@10 information.
 
 The original code gave only Hits@10 values.
 
+Ran the code and got resuts.
+
 2) The HolE github code did not have the FB15K bin file dataset. I created the bin file for FB15K
 from the benchmark FB15K dataset, and put the code for execution. The bin file was the required 
 input format for running the code.
 
 wrote : data2bin.py
+
+3) Have put the HolE code running for the FB15K dataset from 2) 
 
 ==============================================================================
