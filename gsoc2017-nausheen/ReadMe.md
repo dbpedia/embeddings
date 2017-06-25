@@ -94,25 +94,25 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
   <td>TransE</td>
     <td>O(K)</td>
     <td>O(K)</td>
-    <td></td>
+    <td>251</td>
     <td>2.68</td>
-    <td></td>
+    <td>1000</td>
     <td>6.77</td>    
   </tr>
     <tr>
   <td>DistMult</td>
     <td>O(K)</td>
     <td>O(K)</td>
-    <td></td>
+    <td>501</td>
     <td>3.22</td>
-    <td></td>
+    <td>551</td>
     <td>20.38</td>
   </tr>
     <tr>
   <td>HolE</td>
     <td>O(K log K)</td>
     <td>O(K)</td>
-    <td></td>
+    <td>500</td>
     <td>3.98</td>
     <td></td>
     <td></td>
@@ -121,9 +121,9 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
   <td>ComplEx</td>
     <td>O(K)</td>
     <td>O(K)</td>
-    <td></td>
+    <td>551</td>
     <td>9.04</td>    
-    <td></td>
+    <td>751</td>
     <td></td>
   </tr>
 </table>
