@@ -71,7 +71,7 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
 <table>
 <tr>
    <th>Model</th>
-   <th>Scoring Function</th>
+   
    <th>Time Complexity </th>
    <th>Space Complexity</th>
     <th >WN11 <br>Training time (in hours)</th>
@@ -82,7 +82,7 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
   
   <tr>
   <td>TransE</td>
-    <td></td>
+    
     <td>O(K)</td>
     <td>O(K)</td>
     <td>2.68</td>
@@ -90,7 +90,6 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
   </tr>
     <tr>
   <td>DistMult</td>
-    <td></td>
     <td>O(K)</td>
     <td>O(K)</td>
     <td>3.22</td>
@@ -98,7 +97,6 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
   </tr>
     <tr>
   <td>HolE</td>
-    <td></td>
     <td>O(K log K)</td>
     <td>O(K)</td>
     <td>3.98</td>
@@ -106,7 +104,6 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
   </tr>
     <tr>
   <td>ComplEx</td>
-    <td></td>
     <td>O(K)</td>
     <td>O(K)</td>
     <td>9.04</td>
