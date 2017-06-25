@@ -52,7 +52,7 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
     <td></td>
   </tr>
     <tr>
-  <td>complEx</td>
+  <td>ComplEx</td>
     <td>0.94</td>
     <td>0.581</td>
     <td>0.944</td>
@@ -71,54 +71,45 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
 <table>
 <tr>
    <th>Model</th>
-    <th colspan="3">WN11</th>
-    <th colspan="3">FB15K</th>
+   <th>Scoring Function</th>
+   <th>Time Complexity </th>
+   <th>Space Complexity</th>
+    <th >WN11 <br>Training time (in hours)</th>
+    <th >FB15K <br>Training time (in hours)</th>
   </tr>
-  <tr>
-    <th></th>
-    <th>Loss Function</th>
-    <th>Time Complexity </th>
-    <th>Training time (in hours) </th>
-    <th>Loss Function</th>
-    <th>Time Complexity </th>
-    <th>Training time (in hours) </th>
-  </tr>
+
   
   
   <tr>
   <td>TransE</td>
     <td></td>
     <td>O(K)</td>
+    <td>O(K)</td>
     <td>2.68</td>
-    <td></td>
-    <td></td>
     <td>6.77</td>    
   </tr>
     <tr>
   <td>DistMult</td>
     <td></td>
     <td>O(K)</td>
+    <td>O(K)</td>
     <td>3.22</td>
-    <td></td>
-    <td></td>
     <td>20.38</td>
   </tr>
     <tr>
   <td>HolE</td>
     <td></td>
     <td>O(K log K)</td>
+    <td>O(K)</td>
     <td>3.98</td>
-    <td></td>
-    <td></td>
     <td></td>
   </tr>
     <tr>
   <td>ComplEx</td>
     <td></td>
     <td>O(K)</td>
+    <td>O(K)</td>
     <td>9.04</td>
-    <td></td>
-    <td></td>
     <td></td>
   </tr>
 </table>
