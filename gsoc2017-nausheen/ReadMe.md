@@ -74,38 +74,56 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
    
    <th>Time Complexity </th>
    <th>Space Complexity</th>
-    <th >WN11 <br>Training time (in hours)</th>
-    <th >FB15K <br>Training time (in hours)</th>
+    <th colspan="2">WN11 <br></th>
+    <th colspan="2">FB15K <br></th>
   </tr>
 
+
+<tr>
+    <td></td>
+     <td></td>
+      <td></td>
+    <td># Epochs</td>
+    <td>Training time (in hours)</td>
+    <td># Epochs</td>
+    <td>Training time (in hours)</td>    
+  </tr>
   
   
   <tr>
   <td>TransE</td>
     <td>O(K)</td>
     <td>O(K)</td>
+    <td></td>
     <td>2.68</td>
+    <td></td>
     <td>6.77</td>    
   </tr>
     <tr>
   <td>DistMult</td>
     <td>O(K)</td>
     <td>O(K)</td>
+    <td></td>
     <td>3.22</td>
+    <td></td>
     <td>20.38</td>
   </tr>
     <tr>
   <td>HolE</td>
     <td>O(K log K)</td>
     <td>O(K)</td>
+    <td></td>
     <td>3.98</td>
+    <td></td>
     <td></td>
   </tr>
     <tr>
   <td>ComplEx</td>
     <td>O(K)</td>
     <td>O(K)</td>
-    <td>9.04</td>
+    <td></td>
+    <td>9.04</td>    
+    <td></td>
     <td></td>
   </tr>
 </table>
