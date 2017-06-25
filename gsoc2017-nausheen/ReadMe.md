@@ -8,8 +8,7 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
 
 
 <table>
-
-   <tr>
+<tr>
    <th>Model</th>
     <th colspan="3">WN11</th>
     <th colspan="3">FB15K</th>
@@ -61,5 +60,69 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
         <td>0.235</td>
     <td>0.832</td>
   </tr>
-  
 </table>
+
+
+
+
+
+
+
+<table>
+<tr>
+   <th>Model</th>
+    <th colspan="3">WN11</th>
+    <th colspan="3">FB15K</th>
+  </tr>
+  <tr>
+    <th></th>
+    <th>Loss Function</th>
+    <th>Time Complexity </th>
+    <th>Training time (in hours) </th>
+    <th>Loss Function</th>
+    <th>Time Complexity (in hours) </th>
+    <th>Training time</th>
+  </tr>
+  
+  
+  <tr>
+  <td>TransE</td>
+    <td></td>
+    <td></td>
+    <td>2.68</td>
+    <td></td>
+    <td></td>
+    <td>6.77</td>    
+  </tr>
+    <tr>
+  <td>DistMult</td>
+    <td></td>
+    <td></td>
+    <td>3.22</td>
+    <td></td>
+    <td></td>
+    <td>20.38</td>
+  </tr>
+    <tr>
+  <td>HolE</td>
+    <td></td>
+    <td></td>
+    <td>3.98</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+    <tr>
+  <td>ComplEx</td>
+    <td></td>
+    <td></td>
+    <td>9.04</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+
+
+
+
