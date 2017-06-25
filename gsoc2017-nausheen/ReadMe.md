@@ -83,10 +83,10 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
     <td></td>
      <td></td>
       <td></td>
-    <td># Epochs</td>
-    <td>Training time (in hours)</td>
-    <td># Epochs</td>
-    <td>Training time (in hours)</td>    
+    <th>#Epochs</th>
+    <th>Training time <br>(in hours)</th>
+    <th>#Epochs</th>
+    <th>Training time <br>(in hours)</th>    
   </tr>
   
   
