@@ -51,3 +51,15 @@ for various models.
 =============================================================================
 Tried to make SSP run on Linux and Windows. 
 Unfortunately, it did not execute.
+
+=============================================================================
+25th June 2017 :
+=============================================================================
+
+When I check the experiments table, the results of HoLE and TransE looks too close.
+So to gain some more insight, I edited the HoLE code to give Hits@1, Hits@3 and 
+Hits@10 information.
+
+The original code gave only Hits@10 values.
+
+==============================================================================
