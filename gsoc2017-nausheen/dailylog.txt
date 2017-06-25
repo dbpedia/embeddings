@@ -66,4 +66,6 @@ The original code gave only Hits@10 values.
 from the benchmark FB15K dataset, and put the code for execution. The bin file was the required 
 input format for running the code.
 
+wrote : data2bin.py
+
 ==============================================================================
