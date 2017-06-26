@@ -1,7 +1,14 @@
 # -*- coding: utf-8 -*-
+# Code to convert standard dataset to compressed bin file
+# input to HolE is a bin file. 
+# Save into a dictionary usingg a pickle.
 
-# input to hole is a bin file. converting to bin file
-# Save a dictionary into a pickle file.
+# Required files :  entity2id.txt,relation2id.txt,train.txt,test.txt,valid.txt for FB15K
+
+
+
+#Author: Nausheen Fatma, 25th June 2017
+
 import pickle
 
 
