@@ -10,8 +10,8 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
 <table>
 <tr>
    <th>Model</th>
-    <th colspan="3">WN11</th>
-    <th colspan="3">FB15K</th>
+    <th colspan="5">WN11</th>
+    <th colspan="5">FB15K</th>
   </tr>
   <tr>
     <th></th>
