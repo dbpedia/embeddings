@@ -32,13 +32,13 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
   <td>TransE</td>
   <td>0.431</td>
     <td>0.309</td>
-    <td></td>
-    <td></td>
+    <td>0.083</td>
+    <td>0.778</td>
     <td>0.936</td>
     <td>0.374</td>
     <td>0.219</td>
-    <td></td>
-    <td></td>
+    <td>0.219</td>
+    <td>0.471</td>
     <td>0.643</td>    
   </tr>
     <tr>
