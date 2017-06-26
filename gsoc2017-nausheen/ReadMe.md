@@ -17,47 +17,67 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
     <th></th>
     <th>MRR (raw)</th>
     <th>MRR (filtered)</th>
-    <th>Hits@10 (filtered)</th>
+    <th>Hits@1 </th>
+    <th>Hits@3 </th>
+    <th>Hits@10 </th>
     <th>MRR (raw)</th>
     <th>MRR (filtered)</th>
-    <th>Hits@10 (filtered)</th>
-  </tr>
+    <th>Hits@1 </th>
+    <th>Hits@3 </th>
+    <th>Hits@10 </th>
+ </tr>
   
   
   <tr>
   <td>TransE</td>
   <td>0.431</td>
     <td>0.309</td>
+    <td></td>
+    <td></td>
     <td>0.936</td>
     <td>0.374</td>
     <td>0.219</td>
+    <td></td>
+    <td></td>
     <td>0.643</td>    
   </tr>
     <tr>
   <td>DistMult</td>
     <td>0.835</td>
     <td>0.561</td>
+    <td></td>
+    <td></td>
     <td>0.937</td>
     <td>0.651</td>
         <td>0.237</td>
+    <td></td>
+    <td></td>
     <td>0.825</td>
   </tr>
     <tr>
   <td>HolE</td>
     <td>0.62</td>
     <td>0.94</td>
+        <td></td>
+    <td></td>
     <td>0.944</td>
     <td></td>
     <td></td>
+    <td></td>
+        <td></td>
     <td></td>
   </tr>
     <tr>
   <td>ComplEx</td>
   <td>0.581</td>
-    <td>0.94</td>    
+    <td>0.94</td>   
+        <td></td>
+    <td></td>
     <td>0.944</td>
     <td>0.672</td>
         <td>0.235</td>
+    <td></td>
+    <td></td>
     <td>0.832</td>
   </tr>
 </table>
