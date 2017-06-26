@@ -71,13 +71,13 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
   <td>ComplEx</td>
   <td>0.581</td>
     <td>0.94</td>   
-        <td></td>
-    <td></td>
+        <td>0.937</td>
+    <td>0.941</td>
     <td>0.944</td>
     <td>0.672</td>
         <td>0.235</td>
-    <td></td>
-    <td></td>
+    <td>0.571</td>
+    <td>0.746</td>
     <td>0.832</td>
   </tr>
 </table>
