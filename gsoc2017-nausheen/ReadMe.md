@@ -56,11 +56,11 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
   </tr>
     <tr>
   <td>HolE</td>
-    <td>0.62</td>
-    <td>0.94</td>
+  <td><b>0.62</b></td>
+  <td><b>0.94</b></td>
         <td>0.928</td>
-    <td>0.941</td>
-    <td>0.944</td>
+        <td><b>0.941</b></td>
+    <td><b>0.944</b></td>
     <td></td>
     <td></td>
     <td></td>
@@ -70,15 +70,15 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
     <tr>
   <td>ComplEx</td>
   <td>0.581</td>
-    <td>0.94</td>   
-        <td>0.937</td>
-    <td>0.941</td>
-    <td>0.944</td>
-    <td>0.672</td>
+    <td><b>0.94</b></td>   
+        <td><b>0.937</b></td>
+    <td><b>0.941</b></td>
+    <td><b>0.944</b></td>
+    <td><b>0.672</b></td>
         <td>0.235</td>
-    <td>0.571</td>
-    <td>0.746</td>
-    <td>0.832</td>
+        <td><b>0.571</b></td>
+    <td><b>0.746</b></td>
+    <td><b>0.832</b></td>
   </tr>
 </table>
 
