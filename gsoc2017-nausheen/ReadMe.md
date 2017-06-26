@@ -45,13 +45,13 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
   <td>DistMult</td>
     <td>0.835</td>
     <td>0.561</td>
-    <td></td>
-    <td></td>
+    <td>0.753</td>
+    <td>0.913</td>
     <td>0.937</td>
     <td>0.651</td>
         <td>0.237</td>
-    <td></td>
-    <td></td>
+    <td>0.544</td>
+    <td>0.728</td>
     <td>0.825</td>
   </tr>
     <tr>
