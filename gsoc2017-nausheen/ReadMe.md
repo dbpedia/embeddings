@@ -58,8 +58,8 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
   <td>HolE</td>
     <td>0.62</td>
     <td>0.94</td>
-        <td></td>
-    <td></td>
+        <td>0.928</td>
+    <td>0.941</td>
     <td>0.944</td>
     <td></td>
     <td></td>
