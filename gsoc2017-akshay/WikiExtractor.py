@@ -2401,7 +2401,7 @@ def makeInternalLink(title, label):
         if colon2 > 1 and title[colon + 1:colon2] not in options.acceptedNamespaces:
             return ''
     if options.keepLinks:
-        return '<a href="%s">%s</a>' % (quote(title.encode('utf-8')), label)
+        return '<a href="%s">%s</a>' % (title, label)
     else:
         return label
 
@@ -2479,7 +2479,7 @@ def replaceExternalLinks(text):
 def makeExternalLink(url, anchor):
     """Function applied to wikiLinks"""
     if options.keepLinks:
-        return '<a href="%s">%s</a>' % (quote(url.encode('utf-8')), anchor)
+        return ''#<a href="%s">%s</a>' % (url, anchor)
     else:
         return anchor
 

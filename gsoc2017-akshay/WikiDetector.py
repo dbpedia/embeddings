@@ -1,13 +1,14 @@
 import os
 import re
 import sys
-import shutil
 import time
 import tempfile
 from joblib import Parallel, delayed
+from urllib.parse import unquote
+from collections import Counter
 
-def upcase_first_letter(s):
-    return s[0].upper() + s[1:]
+# def upcase_first_letter(s):
+#     return s[0].upper() + s[1:]
 
 def replaceAnchorText(filename):
 	print(filename)
@@ -18,34 +19,58 @@ def replaceAnchorText(filename):
 		for line in fil:
 			if line.startswith("<doc"):
 				t.write(line)
-				title = next(fil).rstrip('\n').replace(' ', '_')
+				title = line.split('title="')[1].split('">')[0]
+				TITLE = title.replace(' ', '_')
 				dictionary = {}
+				next(fil)
 				# print(title)
 				global surfForms
 				# print(surfForms)
-				if title in surfForms:
-					dictionary[title] = surfForms[title]
+				try:
+					dictionary[TITLE] = surfForms[TITLE]
 					# print(surfForms[title])
-				else:
-					dictionary[title] = [title.replace('_', '')]
+				except:
+					dictionary[TITLE] = set([title])
+
+				global gender
+
+				try:
+					if gender[title] == 'f':
+						dictionary[TITLE].add('she'); dictionary[TITLE].add('her'); dictionary[TITLE].add('hers')
+					else:
+						dictionary[TITLE].add('he'); dictionary[TITLE].add('him'); dictionary[TITLE].add('his')
+				except:
+					pass
+
 				continue
 			elif not line == '\n':
 				links = re.findall(r'\<a href\=\"([^\"\:]+)\"\>([^\<]+)\</a\>', line)
 				for link in links:
-					entity = upcase_first_letter(link[0].replace('wikt%3A', '')).replace('%20','_').replace('%28','(').replace('%29',')')
+					# print(link[0] + '====' +link[1])
+					entity = link[0].replace('wikt%3A', ''); entity = entity.replace('wiktionary%3A', '')
+					if entity == '':
+						entity = link[1]
+						
+					entity = unquote(entity[0].upper() + entity[1:]).replace(' ', '_')
 					anchor = link[1].split(' (')[0]
+					anchor = re.escape(anchor)
 					if entity not in dictionary:
-						dictionary[entity] = []
-					if anchor not in dictionary[entity]:
-						dictionary[entity].append(anchor)
+						dictionary[entity] = set()
+					dictionary[entity].add(anchor)
 				line = re.sub('<.*?>', '', line)
 			for entity in sorted(dictionary, key = len, reverse = True):
 				for surfaceForm in sorted(dictionary[entity], key = len, reverse = True):
 					try:
-						line = re.sub(r"\b%s\b" % surfaceForm, 'dbo:' + entity , line, flags = re.IGNORECASE)
+						line = re.sub(r"\b(?<![\/\(])%s\b" % surfaceForm, 'resource/' + entity , line, flags = re.IGNORECASE)
 					except:
 						# print("Unable to tag: " + surfaceForm + " as " + entity)
 						dictionary[entity].remove(surfaceForm)
+
+				# global commonRef
+
+				# for entity in commonRef:
+				# 	line = re.sub(r"\b(?<![\/\(])%s\b" % commonRef[entity], 'resource/' + entity , line, flags = re.IGNORECASE)
+
 			if not line == '\n':
 				t.write(line)
 
@@ -59,12 +84,24 @@ def replaceAnchorText(filename):
 
 	return None
 
+def loadSurfaceForms(filename, most_cmmn):
+	surfaceForm = {}
+	c = 0
+	with open(filename, 'r') as output:
+		for line in output:
+			c += 1
+			print('Loading surface forms: ' + str(int(c*1000/7265689)/10) + '%', end = '\r')
+			surfaceForm[line.split(';', 1)[0]] = set(x[0] for x in Counter(line.rstrip('\n').split(';', 1)[1].split(';')).most_common(most_cmmn))
+	return surfaceForm
+
 def loadDictionary(filename):
 	surfaceForm = {}
 	with open(filename, 'r') as output:
 		for line in output:
-			print('Loading surface forms..', end = '\r')
-			surfaceForm[line.split(';', 1)[0]] = set(line.rstrip('\n').split(';', 1)[1].split(';'))
+			try:
+				surfaceForm[line.rsplit(';', 1)[0]] = line.rstrip('\n').rsplit(';', 1)[1]
+			except:
+				pass
 	return surfaceForm
 
 def splitFiles(directory):
@@ -91,10 +128,15 @@ def splitFiles(directory):
 
 if __name__ == "__main__":
 	directory = sys.argv[1]
+
+	surfForms = loadSurfaceForms("AnchorDictionary.csv", 5)#selecting the top 5 most common anchor text
+	# commonRef = loadDictionary("MostCommon.csv")
+	gender = loadDictionary('EntityGender.csv')
+
 	names = []
-	surfForms = loadDictionary("AnchorDictionary.csv")
 	for root, dirs, files in os.walk(directory):
 		for file in files:
 			names.append(root + '/' + file)
-	Parallel(n_jobs = 8)(delayed(replaceAnchorText)(name) for name in names)
+	
+	Parallel(n_jobs = 8, verbose = 51)(delayed(replaceAnchorText)(name) for name in names)
 		# replaceAnchorText(file)
