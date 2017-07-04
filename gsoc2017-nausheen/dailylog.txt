@@ -78,4 +78,17 @@ wrote : data2bin.py
 
 *   Wrote Week 4 article.
 *   Hangout meet with Tomasso
+
 ==============================================================================
+4th July 2017 :
+==============================================================================
+* Code for DBpedia to Freebase mapping
+
+To do:
+* Run code on DBpedia
+* Weekly Meeting
+
+==============================================================================
+
+
+
