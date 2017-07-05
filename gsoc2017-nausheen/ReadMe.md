@@ -143,7 +143,7 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
     <td>551</td>
     <td>9.04</td>    
     <td>751</td>
-    <td></td>
+    <td>107.33</td>
   </tr>
 </table>
 
