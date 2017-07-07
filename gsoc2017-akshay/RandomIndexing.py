@@ -3,7 +3,7 @@ import re
 from numpy.random import choice
 import numpy as np
 import os
-import time
+from multiprocessing import Process, Manager
 # leng = 6
 # dim = 600
 # q = 1./120
@@ -13,6 +13,13 @@ def cleanhtml(raw_html):
     cleantext = re.sub(cleanr, ' ', raw_html)
     return cleantext
 
+def tok(txt):
+	if txt.startswith('<'):
+		return []
+	punct = '!"#$%&\'()*+,./:;<=>?@[\\]^`{|}~'
+	return re.sub(r'[%s]' % punct, '', re.sub(r'resource/', '', txt)).lower().split()
+
+
 def randomVector(num):
 	q = 1./120
 	return choice([-1, 0, 1], size=num, p=[q/2, 1-q, q/2])
@@ -20,37 +27,19 @@ def randomVector(num):
 def add(vec1, vec2):
 	return np.add(vec1, vec2)
 
-class MySentences(object):
-    def __init__(self, dirname):
-        self.dirname = dirname
-
-    def __iter__(self):
-        punct = '!"#$%&\'()*+,./:;<=>?@[\\]^`{|}~'
-        for root, dirs, files in os.walk(self.dirname):
-            for filename in files:
-                file_path = root + '/' + filename
-                for line in open(file_path):
-                    sline = line.strip()
-                    if sline == "":
-                        continue
-                    rline = cleanhtml(sline)
-                    yield re.sub(r'[%s]' % punct, '', re.sub(r'resource/', '', rline)).lower().split()
-
-def generateEmbeddings(filename):
-	words = set()
-	leng = 6
-	dim = 600
-	now = time.time()
-	count = 0
-	global embeddings
-	global index
+def generateEmbeddings(index, embeddings, filename):
+	leng = 10
+	dim = 600#vector dimens
+	print('START: ', str(os.getpid()), 'FILE: ', filename)
 	with open(filename, 'r') as corpus:
-		for sentence in corpus:
+		for sentences in corpus:
+			sentence = tok(sentences)
 			if len(sentence) >= leng:
 				for i in range(len(sentence) - leng):
-					if sentence[i] not in words:
+					try:
+						embeddings[sentence[i]]
+					except:
 						embeddings[sentence[i]] = np.zeros(dim)
-						words.add(sentence[i])
 					for j in range(int(i - leng/2), i):#left context
 						try:
 							embeddings[sentence[i]] = add(embeddings[sentence[i]], index[sentence[j]])
@@ -65,23 +54,40 @@ def generateEmbeddings(filename):
 							embeddings[sentence[i]] = add(embeddings[sentence[i]], index[sentence[j]])
 					# print(sentence[i] + '(' + str(embeddings[sentence[i]]) + ')')
 					# print(sentence[i], end=' ')
-					count += 1
-					print(str(count/(time.time() - now)) + 'words/s', end = '\r')
-	with open('embedding s', 'w+') as output:
-		for word in embeddings:
-			output.write(word + ';' + str(embeddings[word]) + '\n')
-	with open('index', 'w+') as output:
-		for word in index:
-			output.write(word + ';' + str(index[word]) + '\n')
-	return embeddings, index, words
+	print('COMPLETE: ', str(os.getpid()), 'FILE: ', filename)
 
 if __name__ == '__main__':
 	directory = sys.argv[1]
-	embeddings = {}
-	index = {}
-	names = []
+	# embeddings = {}
+	# index = {}
+	filenames = []
 	for root, dirs, files in os.walk(directory):
 		for file in files:
-			names.append(root + '/' + file)
-	for filename in names:
-		generateEmbeddings(filename)
+			filenames.append(root + '/' + file)
+
+
+	manager = Manager()
+	embeddings = manager.dict()
+	index = manager.dict()
+
+
+	proc = [Process(target=generateEmbeddings, args=(index, embeddings, file)) for file in filenames]
+	for p in proc: p.start()
+	for p in proc: p.join()
+
+	embeddings = dict(embeddings)
+	index = dict(index)
+
+	with open('embeddings', 'w+') as output:
+		for word in embeddings:
+			output.write(word + ' ==')
+			for i in embeddings[word]:
+				output.write(' ' + str(int(i)))
+			output.write('\n')
+
+	with open('index', 'w+') as output:
+		for word in index:
+			output.write(word + ' ==')
+			for i in index[word]:
+				output.write(' ' + str(int(i)))
+			output.write('\n')
