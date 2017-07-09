@@ -82,14 +82,19 @@ wrote : data2bin.py
 ==============================================================================
 4th July 2017 :
 ==============================================================================
-* Code for DBpedia to Freebase mapping
+* Wrote Code for DBpedia to Freebase mapping
 
 To do:
 * Run code on DBpedia
 * Weekly Meeting
+    -Decided to test on subsets with and without dbp, and rdf:type like predicates
 
 ==============================================================================
+9th July :
+==============================================================================
+*Compared the performance of complex code CPU vs GPU.
+*Put a dbpedia subset to run for Transe and complex.
 
-7th July :
-
-
+==============================================================================
+10th July:
+==============================================================================
