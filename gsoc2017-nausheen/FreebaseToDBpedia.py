@@ -6,12 +6,15 @@ Created on  March 13, 2017
 
 
 from SPARQLWrapper import SPARQLWrapper,JSON
+
 import re
 import sys
 import logging
 
 
 sparql=SPARQLWrapper("http://dbpedia.org/sparql") #query the online DBpedia RDF database
+#sparql=SPARQLWrapper("http://localhost:8890/sparql") 
+
 
 def run_query(query):                #query returns triples #json
             sparql.setQuery(query)
@@ -44,7 +47,7 @@ def run_query(query):                #query returns triples #json
             except :
                 print "exception"
                 pass
-            #print "---"
+            #print "---",triple_list
             return triple_list  
 
 ###################################################################
@@ -90,7 +93,7 @@ def make_DBpedia_relationships_for_freebase_entities(entity_f_list):
         #print entity_freebase
         DBpedia_equivalent_list=DBpedia_equivalent_list+find_DBpedia_equivalent_for_freebase_entity(entity_freebase)
     #    pp
-    # take unique entities
+    # take only unique entities
     for entity in DBpedia_equivalent_list:
         DBpedia_entities[entity]=0
     return DBpedia_entities
@@ -114,8 +117,14 @@ def make_DBpedia_dataset(DBpedia_entities,datasetfilepath):
             #print type(p)
             #print str(p).startswith("<http://dbpedia.org/resource/")
             #print str(o).startswith("<http://dbpedia.org/resource/")
-            #limiting to only dbpedia resource entities
-            if str(p).startswith("<http://dbpedia.org/")  and str(o).startswith("<http://dbpedia.org/"): 
+            #limiting to subjects which are dbpedia resource entities
+            
+            if str(s).startswith("<http://dbpedia.org/")  : #variant zero, no filters on predicate and object
+#            if str(s).startswith("<http://dbpedia.org/")  and str(o).startswith("<http://dbpedia.org/"): #variant two, no filters on predicate, object without literals, variant 1
+#            if str(s).startswith("<http://dbpedia.org/")  and str(o).startswith("<http://dbpedia.org/") and str(p).notstartswith("<http://dbpedia.org/property/"): #variant three, predicate without properties, no filters on literals, variant 2
+#            if str(s).startswith("<http://dbpedia.org/")  and str(o).startswith("<http://dbpedia.org/"): #variant four, predicate without properties, object without literals
+
+
                 #print "Yes"
                 fw.write(s+"\t"+p+"\t"+o+"\n")
     fw.close()
@@ -126,78 +135,55 @@ def make_DBpedia_dataset(DBpedia_entities,datasetfilepath):
 reload(sys)
 sys.setdefaultencoding('utf-8')
 logging.basicConfig()            
-#print "Test==========================================="
-#entity_f_list=find_all_FB15k_subjects("/media/nausheenfatma/01CFC8995ADC9230/gsoc2017/Datasets/FB15k/freebase_mtr100_mte100-test.txt")
-#print "entity_f_list found",len(entity_f_list)
-#
-#DBpedia_entities=make_DBpedia_relationships_for_freebase_entities(entity_f_list)
-#print "DBpedia_entities mappings found",len(DBpedia_entities)
-#
-#make_DBpedia_dataset(DBpedia_entities,"DBpedia-test.txt")
-#print "Dataset made !"
 
-
-#print "Train==========================================="
-#entity_f_list=find_all_FB15k_subjects("/media/nausheenfatma/01CFC8995ADC9230/gsoc2017/Datasets/FB15k/freebase_mtr100_mte100-train.txt")
-#print "entity_f_list found",len(entity_f_list)
-#
-#DBpedia_entities=make_DBpedia_relationships_for_freebase_entities(entity_f_list)
-#print "DBpedia_entities mappings found",len(DBpedia_entities)
-#
-#make_DBpedia_dataset(DBpedia_entities,"DBpedia-train.txt")
-#print "Dataset made !"
-
-
-print "Train==========================================="
-entity_f_list=find_all_FB15k_subjects("/media/nausheenfatma/01CFC8995ADC9230/gsoc2017/Datasets/FB15k/freebase_mtr100_mte100-valid.txt")
+print "Valid==========================================="
+entity_f_list=find_all_FB15k_subjects("../data/freebase/valid.txt")
 print "entity_f_list found",len(entity_f_list)
 
 DBpedia_entities=make_DBpedia_relationships_for_freebase_entities(entity_f_list)
 print "DBpedia_entities mappings found",len(DBpedia_entities)
 
-make_DBpedia_dataset(DBpedia_entities,"DBpedia-valid.txt")
-print "Dataset made !"
+make_DBpedia_dataset(DBpedia_entities,"DBpedia_valid_variant0.txt")
+print "Valid Dataset made !"
 
 
 
-#print "Train=========================================="
+print "Test==========================================="
+entity_f_list=find_all_FB15k_subjects("../data/freebase/test.txt")
+print "entity_f_list found",len(entity_f_list)
+
+DBpedia_entities=make_DBpedia_relationships_for_freebase_entities(entity_f_list)
+print "DBpedia_entities mappings found",len(DBpedia_entities)
+
+make_DBpedia_dataset(DBpedia_entities,"DBpedia_test_variant0.txt")
+print "Test dataset made !"
+
+
+print "Train==========================================="
+entity_f_list=find_all_FB15k_subjects("../data/freebase/train.txt")
+print "entity_f_list found",len(entity_f_list)
+
+DBpedia_entities=make_DBpedia_relationships_for_freebase_entities(entity_f_list)
+print "DBpedia_entities mappings found",len(DBpedia_entities)
+
+make_DBpedia_dataset(DBpedia_entities,"DBpedia_train_variant0.txt")
+print "Train dataset made !"
+
+
+
+
+
+
+
+
+
+
+#query="""
+#PREFIX owl:<http://www.w3.org/2002/07/owl#>
 #
+#SELECT ?s WHERE {
+#    ?s (owl:sameAs|^owl:sameAs)* freebase:m.082gq
+#}
+#"""
 #
-#entity_f_list=find_all_FB15k_subjects("/media/nausheenfatma/01CFC8995ADC9230/gsoc2017/Datasets/FB15k/freebase_mtr100_mte100-train.txt")
-#
-#print "entity_f_list found",len(entity_f_list)
-#
-#DBpedia_entities=make_DBpedia_relationships_for_freebase_entities(entity_f_list)
-#print "DBpedia_entities mappings found",len(DBpedia_entities)
-#
-#make_DBpedia_dataset(DBpedia_entities,"DBpedia-train.txt")
-#print "Dataset made !"
-
-
-
-#print "Valid==========================================="
-#entity_f_list=find_all_FB15k_subjects("/media/nausheenfatma/01CFC8995ADC9230/gsoc2017/Datasets/FB15k/freebase_mtr100_mte100-valid.txt")
-#print "entity_f_list found",len(entity_f_list)
-#
-#DBpedia_entities=make_DBpedia_relationships_for_freebase_entities(entity_f_list)
-#print "DBpedia_entities mappings found",len(DBpedia_entities)
-#
-#make_DBpedia_dataset(DBpedia_entities,"DBpedia-valid.txt")
-#print "Dataset made !"
-#
-
-
-
-
-query="""
-
-PREFIX owl:<http://www.w3.org/2002/07/owl#>
-
-SELECT ?s WHERE {
-    ?s (owl:sameAs|^owl:sameAs)* freebase:m.082gq
-}
-
-
-
-"""
 
