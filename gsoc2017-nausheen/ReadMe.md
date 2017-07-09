@@ -114,7 +114,7 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
     <td>O(K)</td>
     <td>O(K)</td>
     <td>251</td>
-    <td>2.68</td>
+    <td>2.68 (CPU) , 0.61 (GPU)</td>
     <td>1000</td>
     <td>6.77</td>    
   </tr>
