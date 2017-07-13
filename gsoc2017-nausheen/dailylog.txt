@@ -99,3 +99,10 @@ To do:
 10th July:
 ==============================================================================
 *Weekly meeting
+Minutes of meetings
+
+short summary:
+- experiments showed excellent results (99.6%) using DistMult on the DBpedia special subset (see blog post);
+- now, we need to focus on understanding which algorithm is best suited for DBpedia with respect to accuracy & runtime, given the dataset structure;
+- we will need DBpedia subsets having different structure (e.g., with/without literals, types, _property_ namespaces);
+- for a determined set (maybe the best performing one?), create subsets having different sizes and plot their runtime on chart, so we can see which one scales better.
