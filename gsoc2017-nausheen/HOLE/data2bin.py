@@ -39,7 +39,7 @@ for line in f:
     line=line.strip()
     tokens=line.split("\t")
     stri="$$"+tokens[0]+"$$"
-    print stri
+    #print stri
     relation_dict[tokens[0].strip()]=int(tokens[1])  
     relation.append(tokens[0].decode('utf-8'))
     
@@ -54,8 +54,8 @@ for line in f:
     line=line.strip()
     line_tokens=line.split()
     e1=line_tokens[0]
-    e2=line_tokens[1]
-    r=line_tokens[2]
+    e2=line_tokens[2]
+    r=line_tokens[1]
     
     test_sub.append((entity_dict[e1],entity_dict[e2],relation_dict[r]))
     
@@ -69,8 +69,8 @@ for line in f:
     line=line.strip()
     line_tokens=line.split()
     e1=line_tokens[0]
-    e2=line_tokens[1]
-    r=line_tokens[2]
+    e2=line_tokens[2]
+    r=line_tokens[1]
     
     train_sub.append((entity_dict[e1],entity_dict[e2],relation_dict[r]))
     
@@ -84,13 +84,13 @@ for line in f:
     line=line.strip()
     line_tokens=line.split()
     e1=line_tokens[0]
-    e2=line_tokens[1]
-    r=line_tokens[2]
+    e2=line_tokens[2]
+    r=line_tokens[1]
     
     valid_sub.append((entity_dict[e1],entity_dict[e2],relation_dict[r]))
     
 data[u'valid_subs']=valid_sub
 
 
-pickle.dump( data, open( "FB15K.bin", "wb" ) )
+pickle.dump( data, open( "DBpediaSet1.bin", "wb" ) )
 
