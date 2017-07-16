@@ -1,4 +1,4 @@
-f=open("train.txt","r")
+f=open("standard_data/train.txt","r")
 
 id_dict={}
 relation_dict={}
@@ -22,7 +22,7 @@ for line in f:
         relation_dict[line_tokens[1]]=0
 
 
-f=open("test.txt","r")
+f=open("standard_data/test.txt","r")
 for line in f:
     line=line.strip()
     line_tokens=line.split()
@@ -42,7 +42,7 @@ for line in f:
         relation_dict[line_tokens[1]]=0
         
         
-f=open("valid.txt","r")
+f=open("standard_data/valid.txt","r")
 for line in f:
     line=line.strip()
     line_tokens=line.split()
@@ -63,7 +63,7 @@ for line in f:
         
         
 id_count=0        
-fw=open("entity2id.txt","w")
+fw=open("standard_data/entity2id.txt","w")
 
 for key in id_dict:
     fw.write(key+"\t"+str(id_count)+"\n")
@@ -72,7 +72,7 @@ for key in id_dict:
 fw.close()
     
 id_count=0        
-fw=open("relation2id.txt","w")
+fw=open("standard_data/relation2id.txt","w")
 
 for key in relation_dict:
     fw.write(key+"\t"+str(id_count)+"\n")
