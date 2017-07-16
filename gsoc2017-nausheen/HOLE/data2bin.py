@@ -92,5 +92,5 @@ for line in f:
 data[u'valid_subs']=valid_sub
 
 
-pickle.dump( data, open( "DBpediaSet1.bin", "wb" ) )
+pickle.dump( data, open( "data/DBpediaSet1.bin", "wb" ) )
 
