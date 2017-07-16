@@ -14,7 +14,7 @@ import pickle
 
 data={}
 
-f=open("entity2id.txt","r")
+f=open("standard_data/entity2id.txt","r")
 entity_dict={}
 
 
@@ -29,7 +29,7 @@ for line in f:
 data[u'entities']=entities
     
     
-f=open("relation2id.txt","r")
+f=open("standard_data/relation2id.txt","r")
 relation_dict={}
 
 
@@ -47,7 +47,7 @@ for line in f:
 data[u'relations']=relation
 
 
-f=open("test.txt")
+f=open("standard_data/test.txt")
 test_sub=[]
 
 for line in f:
@@ -62,7 +62,7 @@ for line in f:
 data[u'test_subs']=test_sub
     
 
-f=open("train.txt")
+f=open("standard_data/train.txt")
 train_sub=[]
 
 for line in f:
@@ -77,7 +77,7 @@ for line in f:
 data[u'train_subs']=train_sub
 
 
-f=open("valid.txt")
+f=open("standard_data/valid.txt")
 valid_sub=[]
 
 for line in f:
