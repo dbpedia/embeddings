@@ -108,7 +108,7 @@ short summary:
 - for a determined set (maybe the best performing one?), create subsets having different sizes and plot their runtime on chart, so we can see which one scales better.
 
 ==============================================================================
-10th July till 20th July:
+10th July till 19th July:
 ==============================================================================
 *created the new folder createDBpediaDataset
 * Wrote code to find different subsets for DBpedia as mentioned in the previous meetings MOM
@@ -117,3 +117,7 @@ short summary:
     SET1 (SET1+(type,subject,literals,wikilinks,assame as predicates)) : Found that Codes do NOT run with literals kind of data
     SET2 (SET1+(type,subject,wikilinks,assame as predicates))
     
+==============================================================================
+20th July till 23th July:
+==============================================================================
+*Unavailable due to academic reasons
