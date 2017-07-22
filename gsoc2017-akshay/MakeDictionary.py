@@ -3,20 +3,20 @@ import re
 import os
 
 def upcase_first_letter(s):
-    return s[0].upper() + s[1:]
+	return s[0].upper() + s[1:]
 
 class MySentences(object):
-    def __init__(self, dirname):
-        self.dirname = dirname
+	def __init__(self, dirname):
+		self.dirname = dirname
 
-    def __iter__(self):
-        for root, dirs, files in os.walk(self.dirname):
-            for filename in files:
-                file_path = root + '/' + filename
-                for line in open(file_path):
-                    if line == "\n":
-                        continue
-                    yield line
+	def __iter__(self):
+		for root, dirs, files in os.walk(self.dirname):
+			for filename in files:
+				file_path = root + '/' + filename
+				for line in open(file_path):
+					if line == "\n":
+						continue
+					yield line
 
 def makeDictionary(directory):
   #takes about 20 min
@@ -29,13 +29,12 @@ def makeDictionary(directory):
 		for link in links:
 			entity = upcase_first_letter(link[0]).replace('%20','_').replace('%28','(').replace('%29',')')
 			anchor = link[1].split(' (')[0]
-			# print(entity + '===' + anchor)
 			#removes the bold and italics wikicode. Also removes trailing parentheses from the anchor text.
-			# output.write(entity + ';' + anchor + '\n')
-			if entity not in dictionary:
+			try:
+				dictionary[entity] += ';' + anchor
+			except:
 				dictionary[entity] = entity
-			# if anchor not in dictionary[entity]:
-			dictionary[entity] += ';' + anchor
+				dictionary[entity] += ';' + anchor
 			print("Anchor Text found : " + str(counter), end = '\r')
 	with open('AnchorDictionary.csv', '+w') as output:
 		for entity in dictionary:
