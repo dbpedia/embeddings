@@ -133,7 +133,7 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
     <td>O(K)</td>
     <td>500</td>
     <td>3.98</td>
-    <td></td>
+    <td>1000</td>
     <td></td>
   </tr>
     <tr>
