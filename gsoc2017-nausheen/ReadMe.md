@@ -61,11 +61,11 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
         <td>0.928</td>
         <td><b>0.941</b></td>
     <td><b>0.944</b></td>
-    <td></td>
-    <td></td>
-    <td></td>
-        <td></td>
-    <td></td>
+    <td>0.21</td>
+    <td>0.46</td>
+    <td>33.45</td>
+    <td>53.63</td>
+    <td>67.54</td>
   </tr>
     <tr>
   <td>ComplEx</td>
