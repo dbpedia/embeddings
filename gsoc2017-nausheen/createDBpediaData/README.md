@@ -19,6 +19,7 @@ shuf DBpedia_freebase_mapped_full_valid.txt -o shuffled_valid.txt
 python make_subsets.py
 ```
 
-
+The output of the above code can be directly used for training <b>TransE</b>, <b>DistMult</b> and <b>complex</b> codes. 
+<b>HolE</b> would require one more step of converting these output files into bin file. Check HOLE folder for the steps.
 
 
