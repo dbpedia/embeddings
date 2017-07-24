@@ -15,5 +15,5 @@ The above command requires 5 files : train.txt, test.txt, valid.txt, entity2id.t
 
 Now run the following HolE shell script
 ```
-python run_hole_DBpedia.sh
+./run_hole_DBpedia.sh
 ```
