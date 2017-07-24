@@ -112,12 +112,18 @@ short summary:
 ==============================================================================
 *created the new folder createDBpediaDataset
 * Wrote code to find different subsets for DBpedia as mentioned in the previous meetings MOM
-* ran codes for the following combinations:
-    SET0 (dbpedia mapped - (type,subject,literals,wikilinks,assame as predicates))
-    SET1 (SET1+(type,subject,literals,wikilinks,assame as predicates)) : Found that Codes do NOT run with literals kind of data
-    SET2 (SET1+(type,subject,wikilinks,assame as predicates))
+* put codes for the following combinations:
+    SET0 (dbpedia mapped dataset (with type,subject,literals,wikilinks,assame as predicates)) : Found that Codes do NOT run with literals kind of data
+    SET1 (SET0 - (literals,type,subject,wikilinks,assame as predicates)) : Results noted
+    SET2 (SET0 - (literals)) 
+    
     
 ==============================================================================
-20th July till 23th July:
+19th July till 22th July:
 ==============================================================================
 *Unavailable due to academic reasons
+
+===============================================================================
+23rd July :
+===============================================================================
+* tried codes on SET1 
