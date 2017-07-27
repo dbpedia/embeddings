@@ -10,11 +10,13 @@ with open('labels') as output:
 		labels.append(line.split('resource/')[1].strip())
 
 tsne = TSNE(n_components=2, random_state=0)
-Y = tsne.fit_transform(X)
+Y = tsne.fit_transform(X[:3000])
 
 fig, ax = plt.subplots()
 ax.scatter(Y[:,0], Y[:,1]);
 
 for i, txt in enumerate(labels):
-	ax.annotate(txt, (Y[i,0], Y[i,1]))
+	if i == 3000:
+		break
+	ax.annotate(txt.decode("utf-8"), (Y[i,0], Y[i,1]))
 plt.show()
