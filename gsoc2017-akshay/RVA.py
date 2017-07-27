@@ -4,11 +4,11 @@ import re
 import numpy as np
 import os
 from multiprocessing import Process, Manager, Pool
-from random import random
 import time
+from random import random
 
 def rand(minimum, maximum):
-    return minimum + (maximum - minimum) * random()
+	return minimum + (maximum - minimum) * random()
 
 class Sparse:
 	def __init__(self, dim, count, limit):
@@ -38,8 +38,6 @@ def add(a, b, weight=1):
 			c.sparse[i] = (weight * b.sparse[i])
 	return c
 
-
-
 def cleanhtml(raw_html):
 	cleanr = re.compile('<.*?>')
 	cleantext = re.sub(cleanr, ' ', raw_html)
@@ -54,7 +52,7 @@ class MySentences(object):
 		for root, dirs, files in os.walk(self.dirname):
 			for filename in files:
 				file_path = root + '/' + filename
-				for line in open(file_path, encoding="utf-8"):
+				for line in open(file_path):
 					sline = line.strip()
 					if sline == "":
 						continue
@@ -78,10 +76,11 @@ class MySentences(object):
 #   return rv
 
 def generateEmbeddings(index, embeddings, sentence, title):
-	dim = 500#vector dimens
-	window = 2#window for context words
+	dim = 500#vector dimension
+	window = 6#window for context words
 	count = 2#number of non-zero values
 	limit = 5#range of non-zero values
+	wt = 1
 	try:
 		index[title]
 	except:
@@ -92,24 +91,37 @@ def generateEmbeddings(index, embeddings, sentence, title):
 			if sentence[i].startswith("resource/"):
 				#add index vector of title entity
 				try:
-					embeddings[sentence[i]] = add(embeddings[sentence[i]], index[title], 3)
+					embeddings[sentence[i]] = add(embeddings[sentence[i]], index[title], 5)
 				except:
 					embeddings[sentence[i]] = Sparse(dim, 0, 1)
-					embeddings[sentence[i]] = add(embeddings[sentence[i]], index[title], 3)
+					embeddings[sentence[i]] = add(embeddings[sentence[i]], index[title], 5)
 
 				#neighbouring words
 				for j in range(int(i - window/2), i):#left context
+					if sentence[j].startswith("resource/"):
+						wt = 3#weight for context entities
+					else:
+						wt = 1#weight for non-entity words
+					# try:
+					# 	embeddings[sentence[j]]
+					# 	wt = 3
+					# except:
+					# 	wt = 1
 					try:
-						embeddings[sentence[i]] = add(embeddings[sentence[i]], index[sentence[j]])
+						embeddings[sentence[i]] = add(embeddings[sentence[i]], index[sentence[j]], wt)
 					except:
 						index[sentence[j]] = Sparse(dim, count, limit)
-						embeddings[sentence[i]] = add(embeddings[sentence[i]], index[sentence[j]])
+						embeddings[sentence[i]] = add(embeddings[sentence[i]], index[sentence[j]], wt)
 				for j in range(i + 1, int(i + (window/2) + 1)):#right context
+					if sentence[j].startswith("resource/"):
+						wt = 3
+					else:
+						wt = 1
 					try:
-						embeddings[sentence[i]] = add(embeddings[sentence[i]], index[sentence[j]])
+						embeddings[sentence[i]] = add(embeddings[sentence[i]], index[sentence[j]], wt)
 					except:
 						index[sentence[j]] = Sparse(dim, count, limit)
-						embeddings[sentence[i]] = add(embeddings[sentence[i]], index[sentence[j]])
+						embeddings[sentence[i]] = add(embeddings[sentence[i]], index[sentence[j]], wt)
 
 	# print("Processed ", str(wc), " words.", end="\r")
 			# print(sentence[i] + '(' + str(embeddings[sentence[i]]) + ')')
@@ -130,7 +142,7 @@ if __name__ == '__main__':
 		wc += len(sentence)
 		if len(sentence) > 0 and sentence[0].startswith('title/'):
 			title = sentence[0].split('title/')[1]
-			print(sentence)
+			print(title)
 		else:
 			pool.apply_async(generateEmbeddings, args=(index, embeddings, sentence, title))
 	pool.close()
@@ -140,21 +152,18 @@ if __name__ == '__main__':
 
 	print("Time elapsed: ", str(time.time() - now), 's')
 
-	embeddings = dict(embeddings)
-	index = dict(index)
-
-	with open('embeddings', 'w+', encoding="utf-8") as output:
-		with open('labels', 'w+', encoding="utf-8") as op:
-			for word in embeddings:
+	with open('embeddings', 'w+') as output:
+		with open('labels', 'w+') as op:
+			for word in embeddings.keys():
 				# output.write(word + ' ==')
 				op.write(word + '\n')
 				for i in embeddings[word].value():
 					output.write(' ' + str(i))
 				output.write('\n')
 
-	with open('index', 'w+', encoding="utf-8") as output:
-		for word in index:
+	with open('index', 'w+') as output:
+		for word in index.keys():
 			output.write(word + ' ==')
 			for i in index[word].value():
-				output.write(' ' + str(int(i)))
+				output.write(' ' + str(i))
 			output.write('\n')
