@@ -7,7 +7,9 @@ Firstly, `python WikiDetector.py enwiki-20170520-pages-articles.xml` modifies th
 
 `python WikiTrainer.py output` trains Word2Vec embeddings using the plain text articles.
 
-`python RVA.py output` generates embeddings for the entities using the plain text articles in the output directory.
+`python RVA.py output` generates embeddings for the entities using the plain text articles in the output directory (uses multiprocessing module).
+
+`python RVA_single.py output` generates embeddings for the entities using the plain text articles in the output directory.
 
 ## Workflow
 1. WikiDetector.py (replaceAnchorText)
