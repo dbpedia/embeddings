@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+###Generates unique id for every entity and relation (predicate)
+#Author: Nausheen Fatma, 25th June 2017
+
+
 f=open("standard_data/train.txt","r")
 
 id_dict={}
