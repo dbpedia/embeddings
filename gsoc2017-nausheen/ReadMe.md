@@ -10,7 +10,7 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
 <table>
 <tr>
    <th>Model</th>
-    <th colspan="5">WN11</th>
+    <th colspan="5">WN18</th>
     <th colspan="5">FB15K</th>
   </tr>
   <tr>
@@ -93,7 +93,7 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
    <th>Model</th>  
    <th>Time Complexity </th>
    <th>Space Complexity</th>
-    <th colspan="2">WN11 <br></th>
+    <th colspan="2">WN18 <br></th>
     <th colspan="2">FB15K <br></th>
   </tr>
 
