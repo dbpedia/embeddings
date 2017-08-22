@@ -27,9 +27,9 @@ def make_set1(full_file_path, set_file_path):
         fw.close()
 
 
-make_set1("shuffled_test.txt","DBpedia_set1_test.txt")
+make_set1("shuffled_test_new.txt","DBpedia_set1_test.txt")
 print "Test made"
-make_set1("shuffled_valid.txt","DBpedia_set1_valid.txt")
+make_set1("shuffled_valid_new.txt","DBpedia_set1_valid.txt")
 print "Valid made"
 make_set1("shuffled_train.txt","DBpedia_set1_train.txt")
 print "Train made"
@@ -60,9 +60,9 @@ def make_set2(full_file_path, set_file_path):
         fw.close()
 
 
-make_set2("shuffled_test.txt","DBpedia_set2_test.txt")
+make_set2("shuffled_test_new.txt","DBpedia_set2_test.txt")
 print "Test made"
-make_set2("shuffled_valid.txt","DBpedia_set2_valid.txt")
+make_set2("shuffled_valid_new.txt","DBpedia_set2_valid.txt")
 print "Valid made"
 make_set2("shuffled_train.txt","DBpedia_set2_train.txt")
 print "Train made"
