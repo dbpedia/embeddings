@@ -13,7 +13,19 @@ shuf DBpedia_freebase_mapped_full_test.txt -o shuffled_test.txt
 shuf DBpedia_freebase_mapped_full_valid.txt -o shuffled_valid.txt
 ```
 
-3) Use the following code to make different subsets from the shuffled dataset.
+3) Remove unseen objects from test and valid sets. 
+
+
+Rule: Every entity present in test and valid set must also be present in the the train set. Otherwise, how can a training algorithm predict an unseen entity?
+
+In step 1, we have found the DBpedia triples for all the "subjects" found in Freebase train, test and valid set respectively. Since the Freebase set pre satisfies the above rule, the corresponding DBpedia set made already follows the rule for "subjects". However, "objects" entity has to be handled. So we prune out all the triples, in which the object entity is not present in train set. We do this by the following code:
+
+```
+python remove_unseen_objects.py
+```
+
+
+4) Use the following code to make different subsets from the shuffled dataset.
 
 ```
 python make_subsets.py
