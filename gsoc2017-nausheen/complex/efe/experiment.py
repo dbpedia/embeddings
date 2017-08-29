@@ -143,5 +143,35 @@ class Experiment(object):
 				rel_cv_results = self.results.extract_sub_scores( this_rel_row_idxs)
 				rel_cv_results.print_MRR_and_hits_given_params(model_s, best_rank, best_lambda)
 
+				
+				
+	def  save_embeddings(self,model_s=None,filename="embeddings.txt"):
+		 """save embeddings in a text file"""
+		 print "inside save embeddings"
+		 model, params = self.models[model_s]
+		 embedding_file=open(filename,"w")
+		 
+		 #print  model.e.get_value(borrow=True).shape
+						#print  self.entities_dict
+
+	 	 inv_entities_indexes_map = {v: k for k, v in self.entities_dict.iteritems()}
+		 #print  model.r.get_value(borrow=True).shape
+	     					#print  self.relations_dict
+	 	 inv_relations_indexes_map = {v: k for k, v in self.relations_dict.iteritems()}
+		 index=0
+		 for item in model.r.get_value(borrow=True):
+
+			embedding_file.write(inv_relations_indexes_map[index]+" "+str(item)[1:-1]+"\n")
+			index=index+1
+		 index=0
+		 for item in model.e.get_value(borrow=True):
+
+			embedding_file.write(inv_entities_indexes_map[index]+" "+str(item)[1:-1]+"\n")
+			index=index+1
 
 
+
+		 embedding_file.close()
+
+
+		
