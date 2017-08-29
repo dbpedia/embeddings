@@ -6,7 +6,7 @@
 Read my week by week blogs here: https://nausheenfatma.wordpress.com/category/gsoc-2017/
 
 
-
+<h3>Experiment Results of the chosen models on FB15K and WN18K datasets:</h3>
 
 
 
