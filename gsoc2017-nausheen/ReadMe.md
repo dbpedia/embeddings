@@ -148,7 +148,7 @@ Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-20
 </table>
 
 
-![alt text](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
+![alt text](https://github.com/nausheenfatma/embeddings/blob/master/gsoc2017-nausheen/polynomial.PNG)
 
 
 
