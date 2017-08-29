@@ -293,16 +293,53 @@ Experiment Results on DBpedia datasets:
     <th colspan="7">DBpedia (train size=100000)</th>
   </tr>   
 <tr>
-  <td>DistMult</td>
-    <td></td>   
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
+  <td>TransE</td>
+    <td>0.046
+</td>   
+    <td>0.061
+</td>
+    <td>0.022
+</td>
+    <td>0.089
+</td>
+    <td>0.112
+</td>
+    <td>801
+</td>
+    <td>6866.93
+</td>
   </tr>  
   
+  
+  <tr>
+  <td>DistMult
+</td>
+<td><b>0.061</b></td>   
+<td><b>0.104</b></td>
+<td><b>0.099</b></td>
+<td><b>0.102</b></td>
+    <td>0.111</td>
+    <td>1201</td>
+    <td>8226.67</td>
+  </tr>  
+  
+  
+  
+  
+  
+   <tr>
+  <td>HolE</td>
+<td><b>0.05</b></td>   
+<td><b>0.08</b></td>
+<td>0.065</td>
+<td>0.086</td>
+<td>0.093    </td>
+<td>4000</td>
+<td>77891</td>
+
+
+    
+  </tr>
   
   
 </table>
