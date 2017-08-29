@@ -208,6 +208,8 @@ You can download the 1 million DBpedia dataset for training, and the final DistM
 
 
 <h3> Conclusion </h3>
+In order to compare the runtime for the approach DistMult on the three varying sets and predicting the training time for full DBpedia size dataset , I executed DisMult on each set for a fixed number of epochs which was 300. After plotting the results on a line graph using Microsoft Excel trendline feature, I got the following graph :
+
 
 ![alt text](https://github.com/nausheenfatma/embeddings/blob/master/gsoc2017-nausheen/polynomial.PNG)
 
