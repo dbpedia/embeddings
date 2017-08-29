@@ -211,7 +211,7 @@ You can find all the code contribution (new codes/ updated codes) information at
 You can download the 1 million DBpedia dataset for training, and the final DistMult embeddings from here:
 
 
-<h3> Conclusion </h3>
+<h3> Predicting the time to train entire DBpedia </h3>
 In order to compare the runtime for the approach DistMult on the three varying sets and predicting the training time for full DBpedia size dataset , I executed <b>DisMult</b> on each set for a fixed number of epochs which was 300. In order to understand why we chose DistMult approach, please read detailed blog post <a href="https://nausheenfatma.wordpress.com/2017/08/28/gsoc-final-submission/">here</a>. After plotting the results on a line graph using Microsoft Excel trendline feature, I got the following graph :
 
 
