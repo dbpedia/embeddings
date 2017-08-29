@@ -14,28 +14,29 @@ iii) HOLE/run_hole_DBpedia.sh
 iv) createDBpediaData/Freebase2DBpedia.py
 v) createDBpediaData/make_subsets.py
 vi) createDBpediaData/remove_unseen_objects.py
+vii) complex/dbpedia_run.py
 
 Dataset files:
 
 Input files for training (10^6 size):
 
-vii) train.txt
-viii) test.txt
-ix) valid.txt
+viIi) train.txt
+ix) test.txt
+x) valid.txt
 
 Output files after training the 10^6 size dataset using DistMult approach:
 
-x) DBpedia_DistMult_embeddings.txt
+xi) DBpedia_DistMult_embeddings.txt
 
 
 ======================================================================================================================
 Updated the files:
 ======================================================================================================================
-xi) complex/code/efe/experiment.py
+xii) complex/code/efe/experiment.py
 
 added a function to save the final embeddings from the trained model into a text file: def save_embeddings(self,model_s=None,filename="embeddings.txt"):
 
-xii) HOLE/kg/base.py
+xiii) HOLE/kg/base.py
 
 
 edited the following functions :
