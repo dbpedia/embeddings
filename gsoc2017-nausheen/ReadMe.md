@@ -10,6 +10,9 @@ Read my week by week blogs here: https://nausheenfatma.wordpress.com/category/gs
 ```
 THEANO_FLAGS='device=gpu' python complex/fb15k_run.py
 THEANO_FLAGS='device=gpu' python complex/wn18_run.py
+
+cd HOLE
+./run_hole_wn18.sh
 ```
 
 <h3>Experiment Results of the chosen models on FB15K and WN18K datasets:</h3>
