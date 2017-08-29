@@ -1,5 +1,6 @@
 <h1> Knowledge Base Embeddings for DBpedia </h1>
 
+This project is done as a part of participation at <b><a href="https://summerofcode.withgoogle.com/">Google Summer of Code 2017</a></b>, for the open source organisation <b>DBpedia</b>
 
 <b>Word embeddings</b> has been found to be very useful in the research community in the recent years by bringing semantically similar word closer in the vector space. Word embeddings is being actively used in many applications such as sentiment analysis, recommendation systems, question answering, etc. Knowledge graphs have been popularly used for storing data in the form of graph in the form of entities and relationships. The objective of this project is to find embeddings for knowledge graphs entities and relationships. If we want to find word embedding for a movie like <i><b>“Beauty and the Beast”</b></i>, simple aggregation/averaging of word embeddings for individual word tokens may or may not make great sense , as these words may be scattered far away in the text space. It would be very useful if we can get embeddings of the complete phrase as 1 atomic unit. Since knowledge graphs already stores the data in entities and relationship form, it would be very useful to get embeddings representation for the same.
 
@@ -204,13 +205,6 @@ The output of the above code can be directly used for training <b>TransE</b>, <b
 THEANO_FLAGS='device=gpu' python complex/dbpedia_run.py
 ```
 
-
-<h3> Code and Contribution </h3>
-You can find all the code contribution (new codes/ updated codes) information at https://github.com/nausheenfatma/embeddings/blob/master/gsoc2017-nausheen/contribution_patch.patch 
-
-You can download the 1 million DBpedia dataset for training, and the final DistMult embeddings from here:
-
-
 <h3> Predicting the time to train entire DBpedia </h3>
 In order to compare the runtime for the approach DistMult on the three varying sets and predicting the training time for full DBpedia size dataset , I executed <b>DisMult</b> on each set for a fixed number of epochs which was 300. In order to understand why we chose DistMult approach, please read detailed blog post <a href="https://nausheenfatma.wordpress.com/2017/08/28/gsoc-final-submission/">here</a>. After plotting the results on a line graph using Microsoft Excel trendline feature, I got the following graph :
 
@@ -219,3 +213,7 @@ In order to compare the runtime for the approach DistMult on the three varying s
 
 
 
+<h3> Code and Contribution </h3>
+You can find all the code contribution (new codes/ updated codes) information at https://github.com/nausheenfatma/embeddings/blob/master/gsoc2017-nausheen/contribution_patch.patch 
+
+You can download the 1 million DBpedia dataset for training, and the final DistMult embeddings from here:
