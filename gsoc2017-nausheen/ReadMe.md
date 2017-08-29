@@ -150,7 +150,7 @@ Read my week by week blogs here: https://nausheenfatma.wordpress.com/category/gs
 
 
 <h3> Code and Contribution </h3>
-You can find all the code logs at https://github.com/nausheenfatma/embeddings/blob/master/gsoc2017-nausheen/contribution_patch.patch 
+You can find all the code contribution (new codes/ updated codes) information at https://github.com/nausheenfatma/embeddings/blob/master/gsoc2017-nausheen/contribution_patch.patch 
 
 <h3> Conclusion </h3>
 
