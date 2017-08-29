@@ -346,8 +346,8 @@ Experiment Results on DBpedia datasets:
   </tr>
      <tr>
   <td>DistMult</td>
-<td><b>0.293</b></td>   
-<td><b>0.668/b></td>
+<td>0.293</td>   
+<td>0.668</td>
 <td>0.551</td>
 <td>0.742</td>
 <td>0.089    </td>
