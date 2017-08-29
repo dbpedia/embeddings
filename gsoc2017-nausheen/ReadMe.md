@@ -209,7 +209,7 @@ Experiment Results on DBpedia datasets:
 <table>
 <tr>
    <th></th>
-    <th colspan="7">DBpedia (train size=10000)</th>
+    <th colspan="8">DBpedia (train size=10000)</th>
   </tr>
   <tr>
     <th>Model</th>
@@ -290,7 +290,7 @@ Experiment Results on DBpedia datasets:
   </tr>  
  <tr>
    <th></th>
-    <th colspan="7">DBpedia (train size=100000)</th>
+    <th colspan="8">DBpedia (train size=100000)</th>
   </tr>   
 <tr>
   <td>TransE</td>
@@ -342,7 +342,7 @@ Experiment Results on DBpedia datasets:
   </tr>
  <tr>
    <th></th>
-    <th colspan="7">DBpedia (train size=1000000)</th>
+    <th colspan="8">DBpedia (train size=1000000)</th>
   </tr>
      <tr>
   <td>DistMult</td>
