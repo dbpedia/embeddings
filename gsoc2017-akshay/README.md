@@ -1,4 +1,4 @@
-# Generating Word2Vec Embeddings
+# Random Vector Accumulator [Google Summer of Code 2017]
 
 ## Usage
 Firstly, `python WikiDetector.py enwiki-20170520-pages-articles.xml` modifies the dump by replacing surface forms with their corresponding entites and saves it to the file 'updatedWiki'.
