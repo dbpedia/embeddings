@@ -216,4 +216,4 @@ In order to compare the runtime for the approach DistMult on the three varying s
 <h3> Code and Contribution </h3>
 You can find all the code contribution (new codes/ updated codes) information from this patch <a href="https://github.com/nausheenfatma/embeddings/blob/master/gsoc2017-nausheen/contribution_patch.patch ">file</a> 
 
-You can download the 1 million DBpedia dataset for training, and the final DistMult embeddings from <a href=" http://tsoru.aksw.org/gsoc2017/dbpedia201604-1M-triples/distmult-embeddings-100dim.zip">here.</a>
+You can download the 1 million DBpedia dataset for training, and the final DistMult embeddings from http://tsoru.aksw.org/gsoc2017/dbpedia201604-1M-triples/distmult-embeddings-100dim.zip
