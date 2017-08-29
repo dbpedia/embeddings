@@ -209,7 +209,7 @@ Experiment Results on DBpedia datasets:
 <table>
 <tr>
    <th>Model</th>
-    <th colspan="5">DBpedia (train size=10000)</th>
+    <th colspan="7">DBpedia (train size=10000)</th>
   </tr>
   <tr>
     <th></th>
@@ -231,8 +231,54 @@ Experiment Results on DBpedia datasets:
     <td>201</td>
     <td>424.68</td>
   </tr>
+    
+  <tr>
+  <td>DistMult</td>
+  <td><b>0.012</b>
+</td>   
+    <td>0.014
+</td>
+    <td>0.013
+</td>
+    <td>0.015
+</td>
+    <td>0.016
+</td>
+    <td>301
+</td>
+    <td>489.8
+</td>
+  </tr> 
   
+<tr>
+  <td>DistMult</td>
+    <td></td>   
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>  
   
+   
+<tr>
+  <td>HolE</td>
+    <td>0.01
+</td>   
+<td><b>0.02</b>
+</td>
+<td><b>0.017</b>
+</td>
+    <td><b>0.017</b>
+</td>
+    <td>0.0186
+</td>
+    <td>3000
+</td>
+    <td>4007.95
+</td>
+  </tr>  
 </table>
 
 
