@@ -204,6 +204,9 @@ The output of the above code can be directly used for training <b>TransE</b>, <b
 <h3> Code and Contribution </h3>
 You can find all the code contribution (new codes/ updated codes) information at https://github.com/nausheenfatma/embeddings/blob/master/gsoc2017-nausheen/contribution_patch.patch 
 
+You can download the 1 million DBpedia dataset for training, and the final DistMult embeddings from here:
+
+
 <h3> Conclusion </h3>
 
 ![alt text](https://github.com/nausheenfatma/embeddings/blob/master/gsoc2017-nausheen/polynomial.PNG)
