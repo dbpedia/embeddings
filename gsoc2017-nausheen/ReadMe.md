@@ -337,8 +337,17 @@ Experiment Results on DBpedia datasets:
 <td>4000</td>
 <td>77891</td>
 
-
-    
+ <tr>
+  <td>ComplEx</td>
+<td><b>0.059</b></td>   
+<td>0.091</td>
+<td>0.077</td>
+<td>0.095    </td>
+<td>0.114</td>
+<td>451</td>
+ <td>4119
+</td>
+   
   </tr>
  <tr>
    <th></th>
