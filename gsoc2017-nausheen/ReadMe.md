@@ -198,7 +198,11 @@ The output of the above code can be directly used for training <b>TransE</b>, <b
 <b>HolE</b> would require one more step of converting these output files into bin file. Check HOLE folder for the steps.
 
 
+<h3>Training the DBpedia data : </h3>
 
+```
+THEANO_FLAGS='device=gpu' python complex/dbpedia_run.py
+```
 
 
 <h3> Code and Contribution </h3>
