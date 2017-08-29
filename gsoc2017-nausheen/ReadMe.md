@@ -208,11 +208,11 @@ THEANO_FLAGS='device=gpu' python complex/dbpedia_run.py
 Experiment Results on DBpedia datasets:
 <table>
 <tr>
-   <th>Model</th>
+   <th></th>
     <th colspan="7">DBpedia (train size=10000)</th>
   </tr>
   <tr>
-    <th></th>
+    <th>Model</th>
     <th>MRR (raw)</th>
     <th>MRR (filtered)</th>
     <th>Hits@1 </th>
@@ -289,7 +289,7 @@ Experiment Results on DBpedia datasets:
 </td>
   </tr>  
  <tr>
-   <th>Model</th>
+   <th></th>
     <th colspan="7">DBpedia (train size=100000)</th>
   </tr>   
 <tr>
@@ -340,8 +340,20 @@ Experiment Results on DBpedia datasets:
 
     
   </tr>
-  
-  
+ <tr>
+   <th></th>
+    <th colspan="7">DBpedia (train size=1000000)</th>
+  </tr>
+     <tr>
+  <td>DistMult</td>
+<td><b>0.293</b></td>   
+<td><b>0.668/b></td>
+<td>0.551</td>
+<td>0.742</td>
+<td>0.089    </td>
+<td>1701</td>
+<td>79644.69
+</td>
 </table>
 
 
