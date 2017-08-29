@@ -249,17 +249,7 @@ Experiment Results on DBpedia datasets:
     <td>489.8
 </td>
   </tr> 
-  
-<tr>
-  <td>DistMult</td>
-    <td></td>   
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>  
+
   
    
 <tr>
@@ -279,6 +269,42 @@ Experiment Results on DBpedia datasets:
     <td>4007.95
 </td>
   </tr>  
+  
+    
+<tr>
+  <td>complEx</td>
+    <td>0.012
+</td>   
+    <td>0.015
+</td>
+    <td>0.013
+</td>
+    <td>0.015
+</td>
+    <td>0.015
+</td>
+    <td>601
+</td>
+    <td>1707
+</td>
+  </tr>  
+ <tr>
+   <th>Model</th>
+    <th colspan="7">DBpedia (train size=100000)</th>
+  </tr>   
+<tr>
+  <td>DistMult</td>
+    <td></td>   
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>  
+  
+  
+  
 </table>
 
 
