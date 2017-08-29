@@ -250,6 +250,7 @@ def ranking_scores(pos, fpos, epoch, txt):
     return fmrr
 
 
+""" commented the old functions
 def _print_pos(pos, fpos, epoch, txt):
     mrr, mean_pos, hits = compute_scores(pos)
     fmrr, fmean_pos, fhits = compute_scores(fpos)
@@ -265,6 +266,32 @@ def compute_scores(pos, hits=10):
     mean_pos = np.mean(pos)
     hits = np.mean(pos <= hits).sum() * 100
     return mrr, mean_pos, hits
+"""
+
+
+###edited functions to report hits@1, hits@3 and hits@10 results. Earlier only Hits@10 was available
+def _print_pos(pos, fpos, epoch, txt):
+    
+    print ("printing results now")
+    mrr, mean_pos, hitsat1, hitsat3,hitsat10 = compute_scores(pos,1)
+    fmrr, fmean_pos, fhitsat1, fhitsat3,fhitsat10 = compute_scores(fpos,1)
+    log.info(
+        "[%3d] %s: MRR = %.2f/%.2f, Mean Rank = %.2f/%.2f, Hits@1 = %.2f/%.2f, Hits@3 = %.2f/%.2f, Hits@10 = %.2f/%.2f" %
+        (epoch, txt, mrr, fmrr, mean_pos, fmean_pos, hitsat1, fhitsat1,hitsat3,fhitsat3,hitsat10,fhitsat10)
+    )
+    
+    return fmrr    
+
+def compute_scores(pos, hits=10):
+    mrr = np.mean(1.0 / pos)
+    mean_pos = np.mean(pos)
+    hits_at_one = np.mean(pos <= 1).sum() * 100
+    hits_at_three = np.mean(pos <= 3).sum() * 100
+    hits_at_ten = np.mean(pos <= 10).sum() * 100
+    return mrr, mean_pos, hits_at_one,hits_at_three,hits_at_ten
+
+
+
 
 
 def cardinalities(xs, ys, sz):
