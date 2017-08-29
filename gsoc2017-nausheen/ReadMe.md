@@ -1,6 +1,6 @@
 <b>Word embeddings</b> has been found to be very useful in the research community in the recent years by bringing semantically similar word closer in the vector space. Word embeddings is being actively used in many applications such as sentiment analysis, recommendation systems, question answering, etc. Knowledge graphs have been popularly used for storing data in the form of graph in the form of entities and relationships. The objective of this project is to find embeddings for knowledge graphs entities and relationships. If we want to find word embedding for a movie like <i><b>“Beauty and the Beast”</b></i>, simple aggregation/averaging of word embeddings for individual word tokens may or may not make great sense , as these words may be scattered far away in the text space. It would be very useful if we can get embeddings of the complete phrase as 1 atomic unit. Since knowledge graphs already stores the data in entities and relationship form, it would be very useful to get embeddings representation for the same.
 
-Read my first blog here : https://nausheenfatma.wordpress.com/2017/05/31/gsoc-2017-knowledge-base-embeddings-for-dbpedia/
+Read my week by week blogs here: https://nausheenfatma.wordpress.com/category/gsoc-2017/
 
 
 
