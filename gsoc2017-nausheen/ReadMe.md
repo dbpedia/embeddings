@@ -396,13 +396,13 @@ We used the <b>DistMult</b> approach on the three sets of size ranges 10^4, 10^5
 
 After plotting, I found the closest curve which fits the data is that of a ploynomial curve of order 2. From the curve, we can see that for 10^8 size (the magnitude for entire DBpedia), the time estimation is approximately 80,000 seconds which means ~22 hours.
 
+<h2> Code and Contribution </h2>
+You can find all the code contribution (new codes/ updated codes) information from this patch <a href="https://github.com/nausheenfatma/embeddings/blob/master/gsoc2017-nausheen/contribution_patch.patch ">file</a>.
+
+You can download the 1 million DBpedia dataset for training, and the final DistMult embeddings from <a href="http://tsoru.aksw.org/gsoc2017/dbpedia201604-1M-triples/distmult-embeddings-100dim.zip">here</a>.
+
 <h2>Future Work</h2>
 
 Now that we have predicted the time it would require to train entire DBpedia, we plan to execute the code on entire DBpedia, and officially release the embeddings, and training datasets on the DBpedia GitHub, where the research community can use it for their experimenting and evaluating their approaches on DBpedia.
 
 
-
-<h2> Code and Contribution </h2>
-You can find all the code contribution (new codes/ updated codes) information from this patch <a href="https://github.com/nausheenfatma/embeddings/blob/master/gsoc2017-nausheen/contribution_patch.patch ">file</a>.
-
-You can download the 1 million DBpedia dataset for training, and the final DistMult embeddings from <a href="http://tsoru.aksw.org/gsoc2017/dbpedia201604-1M-triples/distmult-embeddings-100dim.zip">here</a>.
