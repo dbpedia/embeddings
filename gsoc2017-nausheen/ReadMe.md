@@ -205,7 +205,7 @@ The output of the above code can be directly used for training <b>TransE</b>, <b
 THEANO_FLAGS='device=gpu' python complex/dbpedia_run.py
 ```
 
-Experiment Results on DBpedia datasets:
+<h3>Experiment Results on DBpedia datasets:</h3>
 <table>
 <tr>
    <th></th>
