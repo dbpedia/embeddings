@@ -6,7 +6,7 @@ This project is done as a part of participation at <b><a href="https://summerofc
 
 Read my week by week blogs here: https://nausheenfatma.wordpress.com/category/gsoc-2017/
 
-<h3>Training the embeddings on FB15K and WN18K datasets:</h3>
+<h2>Training the embeddings on FB15K and WN18K datasets:</h2>
 
 ```
 THEANO_FLAGS='device=gpu' python complex/fb15k_run.py
@@ -35,7 +35,7 @@ Now run the following HolE shell script
 
 
 
-<h3>Experiment Results of the chosen models on FB15K and WN18K datasets:</h3>
+<h2>Experiment Results of the chosen models on FB15K and WN18K datasets:</h2>
 
 
 
@@ -180,7 +180,7 @@ Now run the following HolE shell script
 </table>
 
 
-<h3>Making the DBpedia dataset mapped from Freebase subjects :</h3>
+<h2>Making the DBpedia dataset mapped from Freebase subjects :</h2>
 Run the following commands to make various subsets :
 
 1) For every entity <b><i>e</i></b> in Freebase dataset, the following command extracts all the triples <b><i><s, p, o></i></b> from DBpedia. This command will output 3 files : <t>DBpedia_freebase_mapped_full_train.txt</t>, DBpedia_freebase_mapped_full_valid.txt, DBpedia_freebase_mapped_full_test.txt
@@ -218,13 +218,13 @@ The output of the above code can be directly used for training <b>TransE</b>, <b
 <b>HolE</b> would require one more step of converting these output files into bin file. Check HOLE folder for the steps.
 
 
-<h3>Training the DBpedia data : </h3>
+<h2>Training the DBpedia data : </h2>
 
 ```
 THEANO_FLAGS='device=gpu' python complex/dbpedia_run.py
 ```
 
-<h3>Experiment Results on DBpedia datasets:</h3>
+<h2>Experiment Results on DBpedia datasets:</h2>
 <table>
 <tr>
    <th></th>
@@ -386,7 +386,7 @@ THEANO_FLAGS='device=gpu' python complex/dbpedia_run.py
 
 
 
-<h3> Predicting the time to train entire DBpedia </h3>
+<h2> Predicting the time to train entire DBpedia </h2>
 In order to compare the runtime for the approach DistMult on the three varying sets and predicting the training time for full DBpedia size dataset , I executed <b>DisMult</b> on each set for a fixed number of epochs which was 300. In order to understand why we chose DistMult approach, please read detailed blog post <a href="https://nausheenfatma.wordpress.com/2017/08/28/gsoc-final-submission/">here</a>. After plotting the results on a line graph using Microsoft Excel trendline feature, I got the following graph :
 
 
@@ -394,7 +394,7 @@ In order to compare the runtime for the approach DistMult on the three varying s
 
 
 
-<h3> Code and Contribution </h3>
+<h2> Code and Contribution </h2>
 You can find all the code contribution (new codes/ updated codes) information from this patch <a href="https://github.com/nausheenfatma/embeddings/blob/master/gsoc2017-nausheen/contribution_patch.patch ">file</a>.
 
 You can download the 1 million DBpedia dataset for training, and the final DistMult embeddings from <a href="http://tsoru.aksw.org/gsoc2017/dbpedia201604-1M-triples/distmult-embeddings-100dim.zip">here</a>.
