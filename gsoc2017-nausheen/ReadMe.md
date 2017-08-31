@@ -403,6 +403,6 @@ You can download the 1 million DBpedia dataset for training, and the final DistM
 
 <h2>Future Work</h2>
 
-Now that we have predicted the time it would require to train entire DBpedia, we plan to execute the code on entire DBpedia, and officially release the embeddings, and training datasets on the official DBpedia website, where the research community can use it for their experimenting and evaluating their approaches on DBpedia.
+Now that we have predicted the time it would require to train entire DBpedia, we plan to execute the code on entire DBpedia, and officially release the embeddings, and training datasets on the official DBpedia website, where the research community can use it for their own experiments or applications.
 
 
