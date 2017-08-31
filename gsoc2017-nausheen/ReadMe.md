@@ -21,13 +21,13 @@ The open source HoLe <a href="https://github.com/mnick/holographic-embeddings">c
 ```
 python makeid_file.py
 ```
-The above command requires 3 files : train.txt, test.txt, valid.txt kept in <b>standard_data</b> folder. This code outputs two files entity2id.txt and relation2id.txt in the <b>standard_data</b> folder. This code assigns a unique integer id to every entity and relation found in train.txt, test.txt, valid.txt files.
+The above command requires 3 files : train.txt, test.txt, valid.txt kept in <b>HOLE/standard_data</b> folder. This code outputs two files entity2id.txt and relation2id.txt in the <b>HOLE/standard_data</b> folder. This code assigns a unique integer id to every entity and relation found in train.txt, test.txt, valid.txt files.
 ```
 python data2bin.py
 ```
-The above command requires 5 files : train.txt, test.txt, valid.txt, entity2id.txt and relation2id.txt kept in the <b>standard_data</b> folder. This code outputs the bin file in the <b>data</b> folder.
+The above command requires 5 files : train.txt, test.txt, valid.txt, entity2id.txt and relation2id.txt kept in the <b>HOLE/standard_data</b> folder. This code outputs the bin file in the <b>HOLE/data</b> folder.
 
-Now run the following HolE shell script
+Now run the following shell script to train the embeddings and find the performance results :
 ```
 ./run_hole_DBpedia.sh
 ```
