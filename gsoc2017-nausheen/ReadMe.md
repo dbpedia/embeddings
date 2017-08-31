@@ -246,7 +246,7 @@ THEANO_FLAGS='device=gpu' python complex/dbpedia_run.py
     <td>0.01</td>
     <td>0.001</td>
     <td>0.013</td>
-    <td>0.028</td>
+    <td><b>0.028</b></td>
     <td>201</td>
     <td>424.68</td>
   </tr>
