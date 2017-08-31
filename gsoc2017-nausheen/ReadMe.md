@@ -302,7 +302,7 @@ Experiment Results on DBpedia datasets:
 </td>
     <td>0.089
 </td>
-    <td>0.112
+<td><b>0.112</b>
 </td>
     <td>801
 </td>
@@ -329,8 +329,8 @@ Experiment Results on DBpedia datasets:
   
    <tr>
   <td>HolE</td>
-<td><b>0.05</b></td>   
-<td><b>0.08</b></td>
+<td>0.05</td>   
+<td>0.08</td>
 <td>0.065</td>
 <td>0.086</td>
 <td>0.093    </td>
@@ -339,7 +339,7 @@ Experiment Results on DBpedia datasets:
 
  <tr>
   <td>ComplEx</td>
-<td><b>0.059</b></td>   
+<td>0.059</td>   
 <td>0.091</td>
 <td>0.077</td>
 <td>0.095    </td>
