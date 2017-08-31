@@ -387,12 +387,18 @@ THEANO_FLAGS='device=gpu' python complex/dbpedia_run.py
 
 
 <h2> Predicting the time to train entire DBpedia </h2>
-As a part of the project we wanted to predict how much time would it take to train entire DBpedia datatset of size (~100 million) dataset.
+As a part of the project, we wanted to predict how much time would it take to train entire DBpedia datatset of size (~100 million) dataset.
 
 We used the <b>DistMult</b> approach on the three sets of size ranges 10^4, 10^5, and 10^6.  I executed <b>DisMult</b> on each set for a fixed number of epochs which was 300. In order to understand why we chose <b>DistMult</b> approach, please read detailed blog post <a href="https://nausheenfatma.wordpress.com/2017/08/28/gsoc-final-submission/">here</a>. After plotting the results on a line graph using Microsoft Excel <a href="https://support.office.com/en-us/article/Add-change-or-remove-a-trendline-in-a-chart-fa59f86c-5852-4b68-a6d4-901a745842ad">trendline</a> feature to predict time for larger sizes, I got the following graph :
 
 
 ![alt text](https://github.com/nausheenfatma/embeddings/blob/master/gsoc2017-nausheen/polynomial.PNG)
+
+After plotting, I found the closest curve which fits the data is that of a ploynomial curve of order 2. From the curve, we can see that for 10^8 size (the magnitude for entire DBpedia), the time estimation is approximately 80,000 seconds which means ~22 hours.
+
+<h2>Future Work</h2>
+
+Now that we have predicted the time it would require to train entire DBpedia, we plan to execute the code on entire DBpedia, and officially release the embeddings, and training datasets on the DBpedia GitHub, where the research community can use it for their experimenting and evaluating their approaches on DBpedia.
 
 
 
