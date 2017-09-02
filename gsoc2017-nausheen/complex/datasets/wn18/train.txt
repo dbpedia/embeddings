@@ -1,1 +1,2 @@
 e1 r e2
+#WN18 download link: https://everest.hds.utc.fr/lib/exe/fetch.php?media=en:wordnet-mlj12.tar.gz
