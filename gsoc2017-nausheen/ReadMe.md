@@ -227,6 +227,7 @@ For <b>HolE</b>, we would require one more step of converting these files into b
 THEANO_FLAGS='device=gpu' python complex/dbpedia_run.py
 ```
 
+
 <h2>Experiment Results on DBpedia datasets:</h2>
 <table>
 <tr>
@@ -392,7 +393,15 @@ THEANO_FLAGS='device=gpu' python complex/dbpedia_run.py
 <h2> Predicting the time to train entire DBpedia </h2>
 As a part of the project, we wanted to predict how much time would it take to train entire DBpedia datatset of size (~100 million) dataset.
 
-We used the <b>DistMult</b> approach on the three sets of size ranges 10^4, 10^5, and 10^6.  I executed <b>DisMult</b> on each set for a fixed number of epochs which was 300. In order to understand why we chose <b>DistMult</b> approach, please read detailed blog post <a href="https://nausheenfatma.wordpress.com/2017/08/28/gsoc-final-submission/">here</a>. After plotting the results on a line graph using Microsoft Excel <a href="https://support.office.com/en-us/article/Add-change-or-remove-a-trendline-in-a-chart-fa59f86c-5852-4b68-a6d4-901a745842ad">trendline</a> feature to predict time for larger sizes, I got the following graph :
+We used the <b>DistMult</b> approach on the three sets of size ranges 10^4, 10^5, and 10^6.  I executed <b>DisMult</b> on each set for a fixed number of epochs which was 300. In order to understand why we chose <b>DistMult</b> approach, please read detailed blog post <a href="https://nausheenfatma.wordpress.com/2017/08/28/gsoc-final-submission/">here</a>. 
+
+Run the following script to train 1 million(10^6) dataset and save the embeddings after training in a text file:
+```
+THEANO_FLAGS='device=gpu' python complex/dbpedia_run_DistMult.py
+```
+
+
+After plotting the results on a line graph using Microsoft Excel <a href="https://support.office.com/en-us/article/Add-change-or-remove-a-trendline-in-a-chart-fa59f86c-5852-4b68-a6d4-901a745842ad">trendline</a> feature to predict time for larger sizes, I got the following graph :
 
 
 ![alt text](https://github.com/nausheenfatma/embeddings/blob/master/gsoc2017-nausheen/polynomial.PNG)
