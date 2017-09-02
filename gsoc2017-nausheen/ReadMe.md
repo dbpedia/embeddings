@@ -180,7 +180,8 @@ Now run the following shell script to train the embeddings and find the performa
 </table>
 
 
-<h2>Making the DBpedia dataset mapped from Freebase subjects :</h2>
+<h2>Making the DBpedia dataset and training the embeddings</h2>
+
 Run the following commands to make various subsets :
 
 1) For every entity <b><i>e</i></b> in Freebase dataset, the following command extracts all the triples <b><i><s, p, o></i></b> from DBpedia. This command will output 3 files : <t>DBpedia_freebase_mapped_full_train.txt</t>, DBpedia_freebase_mapped_full_valid.txt, DBpedia_freebase_mapped_full_test.txt
@@ -216,14 +217,14 @@ python createDBpediaData/make_subsets.py
 
 After running the above 4 steps, we would give get files ```train.txt, test.txt, valid.txt``` in the end. These can be directly used for training <b>TransE</b>, <b>DistMult</b> and <b>complex</b> codes. 
 
-Put these 3 files into <b>complex/dbpedia_dataset/</b> folder.
-
 For <b>HolE</b>, we would require one more step of converting these files into bin file. Check HOLE folder for the steps.
 
+5) Training the DBpedia data 
 
-<h2>Training the DBpedia data : </h2>
+Put the ``train.txt, test.txt, valid.txt``` files from step 4 into <b>complex/dbpedia_dataset/</b> folder and run the following command.
 
 ```
+cd complex
 THEANO_FLAGS='device=gpu' python complex/dbpedia_run.py
 ```
 
