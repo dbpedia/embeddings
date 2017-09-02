@@ -11,7 +11,7 @@ if __name__ =="__main__":
 	start_time = time.time()
 	print(start_time)
 	#Load data, ensure that data is at path: 'path'/'name'/[train|valid|test].txt
-	dbpediaexp = build_data(name = 'dbpedia_1million_dataset',path = tools.cur_path + '/datasets/')
+	dbpediaexp = build_data(name = 'dbpedia_dataset',path = tools.cur_path + '/datasets/')
 
 
 	#SGD hyper-parameters:
