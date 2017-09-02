@@ -220,7 +220,7 @@ After running the above 4 steps, we would give get files ```train.txt, test.txt,
 
 For <b>HolE</b>, we would require one more step of converting these files into bin file. Check HOLE folder for the steps.
 
-5) Training the DBpedia data 
+5) Training the embeddings on the DBpedia dataset
 
 Put the ``train.txt, test.txt, valid.txt``` files from step 4 into <b>complex/dbpedia_dataset/</b> folder and run the following commands.
 
