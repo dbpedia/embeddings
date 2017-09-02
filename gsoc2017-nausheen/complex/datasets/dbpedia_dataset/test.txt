@@ -1,1 +1,2 @@
 e1 r e2
+#dbpedia dataset download link: http://tsoru.aksw.org/gsoc2017/dbpedia201604-1M-triples/distmult-embeddings-100dim.zip
