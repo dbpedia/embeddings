@@ -222,7 +222,7 @@ For <b>HolE</b>, we would require one more step of converting these files into b
 
 5) Training the embeddings on the DBpedia dataset
 
-Put the ``train.txt, test.txt, valid.txt``` files from step 4 into <b>complex/dbpedia_dataset/</b> folder and run the following commands.
+Put the ```train.txt, test.txt, valid.txt``` files from step 4 into <b>complex/dbpedia_dataset/</b> folder and run the following commands.
 
 ```
 cd complex
