@@ -214,8 +214,11 @@ python createDBpediaData/remove_unseen_objects.py
 python createDBpediaData/make_subsets.py
 ```
 
-The output of the above code can be directly used for training <b>TransE</b>, <b>DistMult</b> and <b>complex</b> codes. 
-<b>HolE</b> would require one more step of converting these output files into bin file. Check HOLE folder for the steps.
+After running the above 4 steps, we would give get files ```train.txt, test.txt, valid.txt``` in the end. These can be directly used for training <b>TransE</b>, <b>DistMult</b> and <b>complex</b> codes. 
+
+Put these 3 files into <b>complex/dbpedia_dataset/</b> folder.
+
+For <b>HolE</b>, we would require one more step of converting these files into bin file. Check HOLE folder for the steps.
 
 
 <h2>Training the DBpedia data : </h2>
