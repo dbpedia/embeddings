@@ -186,7 +186,8 @@ Run the following commands to make various subsets :
 
 1) For every entity <b><i>e</i></b> in Freebase dataset, the following command extracts all the triples <b><i><s, p, o></i></b> from DBpedia. This command will output 3 files : <t>DBpedia_freebase_mapped_full_train.txt</t>, DBpedia_freebase_mapped_full_valid.txt, DBpedia_freebase_mapped_full_test.txt
 ```
-python createDBpediaData/Freebase2DBpedia.py
+cd createDBpediaData
+python Freebase2DBpedia.py
 ```
 
 2) For every entity from Freebase we get a 1:N mapping in DBpedia. This N can be as large as 200-300 triples. In order to get a better training it is a good idea to shuffle this data, so that triples of same entity are not grouped together. I use the following Linux command to shuffle the data.
@@ -205,14 +206,14 @@ Rule: Every entity present in test and valid set must also be present in the the
 In step 1, we have found the DBpedia triples for all the "subjects" found in Freebase train, test and valid set respectively. Since the Freebase set pre satisfies the above rule, the corresponding DBpedia set made already follows the rule for "subjects". However, "objects" entity has to be handled. So we prune out all the triples, in which the object entity is not present in train set. We do this by the following code:
 
 ```
-python createDBpediaData/remove_unseen_objects.py
+python remove_unseen_objects.py
 ```
 
 
 4) Use the following code to make different subsets from the shuffled dataset.
 
 ```
-python createDBpediaData/make_subsets.py
+python make_subsets.py
 ```
 
 After running the above 4 steps, we would give get files ```train.txt, test.txt, valid.txt``` in the end. These can be directly used for training <b>TransE</b>, <b>DistMult</b> and <b>complex</b> codes. 
@@ -221,11 +222,11 @@ For <b>HolE</b>, we would require one more step of converting these files into b
 
 5) Training the DBpedia data 
 
-Put the ``train.txt, test.txt, valid.txt``` files from step 4 into <b>complex/dbpedia_dataset/</b> folder and run the following command.
+Put the ``train.txt, test.txt, valid.txt``` files from step 4 into <b>complex/dbpedia_dataset/</b> folder and run the following commands.
 
 ```
 cd complex
-THEANO_FLAGS='device=gpu' python complex/dbpedia_run.py
+THEANO_FLAGS='device=gpu' python dbpedia_run.py
 ```
 
 
@@ -398,7 +399,8 @@ We used the <b>DistMult</b> approach on the three sets of size ranges 10^4, 10^5
 
 Run the following script to train 1 million(10^6) dataset and save the embeddings after training in a text file:
 ```
-THEANO_FLAGS='device=gpu' python complex/dbpedia_run_DistMult.py
+cd complex
+THEANO_FLAGS='device=gpu' python dbpedia_run_DistMult.py
 ```
 
 
