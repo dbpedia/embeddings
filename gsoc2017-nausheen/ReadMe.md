@@ -384,7 +384,7 @@ THEANO_FLAGS='device=gpu' python dbpedia_run.py
 <td>0.668</td>
 <td>0.551</td>
 <td>0.742</td>
-<td>0.089    </td>
+<td>0.89    </td>
 <td>1701</td>
 <td>79644.69
 </td>
