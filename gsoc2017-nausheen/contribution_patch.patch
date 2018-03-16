@@ -1,0 +1,48 @@
+##Author: Nausheen Fatma, 29th August, 2017
+
+Below mentioned are the contributions (new and updated files and code) made during GSoC 2017.
+
+======================================================================================================================
+New files created:
+======================================================================================================================
+
+Code files:
+
+i) HOLE/data2bin.py
+ii) HOLE/makeid_file.py
+iii) HOLE/run_hole_DBpedia.sh
+iv) createDBpediaData/Freebase2DBpedia.py
+v) createDBpediaData/make_subsets.py
+vi) createDBpediaData/remove_unseen_objects.py
+vii) complex/dbpedia_run.py
+
+Dataset files:
+
+Input files for training (10^6 size):
+
+viIi) train.txt
+ix) test.txt
+x) valid.txt
+
+Output files after training the 10^6 size dataset using DistMult approach:
+
+xi) DBpedia_DistMult_embeddings.txt
+
+
+======================================================================================================================
+Updated the files:
+======================================================================================================================
+xii) complex/code/efe/experiment.py
+
+added a function to save the final embeddings from the trained model into a text file: def save_embeddings(self,model_s=None,filename="embeddings.txt"):
+
+xiii) HOLE/kg/base.py
+
+
+edited the following functions :
+def _print_pos(pos, fpos, epoch, txt):
+def compute_scores(pos, hits=10):
+
+Earlier the functions only gave the output for MRR and Hits@10. The edited version gives MRR, Hits@1, Hits@3 and Hits@10
+
+

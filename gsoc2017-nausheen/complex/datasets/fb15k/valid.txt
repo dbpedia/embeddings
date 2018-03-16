@@ -1,0 +1,2 @@
+e1 r e2
+#FB15K dataset download link : https://everest.hds.utc.fr/lib/exe/fetch.php?media=en:fb15k.tgz
