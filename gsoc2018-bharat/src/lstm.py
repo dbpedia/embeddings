@@ -16,46 +16,43 @@ torch.manual_seed(1)
 logging.basicConfig(format='%(levelname)s : %(message)s', level=logging.INFO)
 logging.root.level = logging.INFO
 
-wv = None
-
-def load_model(savedModel):
+def load_model(saved_model):
 	"""
 	Load the saved model containing
 	pre-trained embeddings. I deleted
 	the model while just keeping the
 	vectors to save memory.
 	"""
-	global wv
-	model = FastText.load(savedModel)
+	model = FastText.load(saved_model)
 	wv = model.wv
 	del model
+	return wv
 
-def load_mappings(descriptions):
+def load_mappings(descriptions, wv):
 	"""
 	Input to an LSTM must be a 3D tensor. For that, I
 	am reading all the descriptions line by line and
 	storing their embeddings row wise into a numpy
 	array of 3 dimensions and shape (n, 500, 300).
 	"""
-	global wv
 	count = 0
 
 	# Fixed shape for the input layer of the lstm network.
 	shape = (500, 300)
 	entities = []
 	abstracts = []
-	with open(descriptions, 'r') as file:
+	with open(descriptions, 'r') as input_file:
 		logging.info('mapping the resources and their descriptions')
-		for line in file:
+		for line in input_file:
 			if count % 5000 == 0:
 				logging.info('reading resource # {0}'.format(count))
-			jsonline = json.loads(line)
+			json_line = json.loads(line)
 
 			# Resource is extracted
-			ent = [_ for _ in jsonline.keys()][0]
+			ent = [_ for _ in json_line.keys()][0]
 
 			# Description is extracted and split into tokens
-			desc = jsonline[ent].split()
+			desc = json_line[ent].split()
 			try:
 				# Using a temporary array to pad the original embedding, can be replaced by np.pad()
 				t = np.zeros(shape, dtype=np.float32)
@@ -69,7 +66,6 @@ def load_mappings(descriptions):
 				count += 1
 			except:
 				continue
-	del wv
 	logging.info('resources read into np stack of length : {0}'.format(count))
 
 	# Currently the process is killed here because of memory pressure.
@@ -79,21 +75,20 @@ def load_mappings(descriptions):
 	np.save('../data/entity.npy', entities)
 	logging.info('saving description embeddings to data/description.npy')
 	np.save('../data/description.npy', abstracts)
-	# return Bunch(X=np.vstack(abstracts).astype("object"),
-	# 			 y=np.hstack(entities).astype("object"))
+	return Bunch(X=np.vstack(abstracts).astype("object"),
+				 y=np.hstack(entities).astype("object"))
 
 def create_tensors():
 	pass
 
-def main(savedModel, descriptions):
-	global wv
-	load_model(savedModel)
-	mappings = load_mappings(descriptions)
+def main(saved_model, descriptions_file):
+	wv = load_model(saved_model)
+	mappings = load_mappings(descriptions_file, wv)
 
 if __name__ == '__main__':
 	mode = sys.argv[1]
 	if mode == 'save':
-		savedModel, descriptions = sys.argv[2], sys.argv[3]
-		main(savedModel, descriptions)
+		saved_model, descriptions_file = sys.argv[2], sys.argv[3]
+		main(saved_model, descriptions_file)
 	elif mode == 'load':
 		create_tensors()

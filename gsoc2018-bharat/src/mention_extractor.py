@@ -7,13 +7,7 @@ from joblib import Parallel, delayed
 from urllib.parse import unquote
 from collections import Counter
 
-def upcase_first_letter(s):
-	"""
-	Capitalize the string.
-	"""
-    return s[0].upper() + s[1:]
-
-def replaceAnchorText(filename):
+def replace_anchor_text(file_name):
 	"""
 	Given the input file, the surface forms loaded from anchor text
 	are used to extract entity mentions and replace them with the
@@ -21,15 +15,15 @@ def replaceAnchorText(filename):
 
 	Arguments
 	---------
-	filename : Input file containing the extracted text.
+	file_name : Input file containing the extracted text.
 	"""
-	print(filename)
+	print(file_name)
 
 	# A temporary file to track the input file document by document.
 	t = tempfile.NamedTemporaryFile(mode = "r+")
 	dictionary = {}
-	with open(filename, 'r') as fil:
-		for line in fil:
+	with open(file_name, 'r') as wiki_file:
+		for line in wiki_file:
 			if line.startswith("<doc"):
 				t.write(line)
 
@@ -38,12 +32,12 @@ def replaceAnchorText(filename):
 				TITLE = title.replace(' ', '_')
 
 				dictionary = {}
-				next(fil)
+				next(wiki_file)
 
 				# Global surface forms dictionary
-				global surfForms
+				global surface_forms
 				try:
-					dictionary[TITLE] = surfForms[TITLE]
+					dictionary[TITLE] = surface_forms[TITLE]
 				except:
 					dictionary[TITLE] = set([title])
 
@@ -76,26 +70,26 @@ def replaceAnchorText(filename):
 					dictionary[entity].add(anchor)
 				line = re.sub('<.*?>', '', line)
 			for entity in sorted(dictionary, key = len, reverse = True):
-				for surfaceForm in sorted(dictionary[entity], key = len, reverse = True):
+				for surface_form in sorted(dictionary[entity], key = len, reverse = True):
 					try:
-						line = re.sub(r"\b(?<![\/\(])%s\b" % surfaceForm, 'resource/' + entity , line, flags = re.IGNORECASE)
+						line = re.sub(r"\b(?<![\/\(])%s\b" % surface_form, 'resource/' + entity , line, flags = re.IGNORECASE)
 					except:
-						dictionary[entity].remove(surfaceForm)
+						dictionary[entity].remove(surface_form)
 
 			if not line == '\n':
 				t.write(line)
 
 	t.seek(0)
 
-	with open(filename, 'w') as output:
+	with open(file_name, 'w') as output_file:
 		for line in t:
-			output.write(line)
+			output_file.write(line)
 
 	t.close()
 
 	return None
 
-def loadSurfaceForms(filename, most_cmmn):
+def load_surface_forms(file_name, most_frequent):
 	"""
 	Takes the surface form dictionary as input and
 	returns the loaded entities mapped onto their
@@ -103,65 +97,65 @@ def loadSurfaceForms(filename, most_cmmn):
 
 	Arguments
 	---------
-	filename : Input dictionary
-	most_cmmn : Parameter to decide the most common surface forms
+	file_name : Input dictionary
+	most_frequent : Parameter to decide the most frequent surface forms
 	"""
-	surfaceForm = {}
+	surface_form = {}
 	c = 0
-	with open(filename, 'r') as output:
-		for line in output:
+	with open(file_name, 'r') as input_file:
+		for line in input_file:
 			c += 1
 			print('Loading surface forms: ' + str(int(c*1000/746565)/10) + '%', end = '\r')
-			surfaceForm[line.split(';', 1)[0]] = set(x[0] for x in Counter(line.rstrip('\n').split(';', 1)[1].split(';')).most_common(most_cmmn))
-	return surfaceForm
+			surface_form[line.split(';', 1)[0]] = set(x[0] for x in Counter(line.rstrip('\n').split(';', 1)[1].split(';')).most_common(most_frequent))
+	return surface_form
 
-def loadDictionary(filename):
+def load_dictionary(file_name):
 	"""
 	Loads the entire surface form dictionary from memory
 	"""
-	surfaceForm = {}
-	with open(filename, 'r') as output:
-		for line in output:
+	surface_form = {}
+	with open(file_name, 'r') as input_file:
+		for line in input_file:
 			try:
-				surfaceForm[line.rsplit(';', 1)[0]] = line.rstrip('\n').rsplit(';', 1)[1]
+				surface_form[line.rsplit(';', 1)[0]] = line.rstrip('\n').rsplit(';', 1)[1]
 			except:
 				pass
-	return surfaceForm
+	return surface_form
 
-def splitFiles(directory):
+def split_files(directory):
 	"""
 	Iterate through the files in the extracted directory
 	"""
 	names = []
-	for root, dirs, files in os.walk(directory):
-		for file in files:
-			names.append(root + '/' + file)
+	for root, directories, files in os.walk(directory):
+		for f in files:
+			names.append(root + '/' + f)
 	flag = False
 	for name in names:
-		with open(name, 'r') as inp:
-			dirname = name + '_'
-			os.mkdir(dirname)
-			for line in inp:
+		with open(name, 'r') as input_file:
+			directory_name = name + '_'
+			os.mkdir(directory_name)
+			for line in input_file:
 				if line.startswith('</doc'):
 					continue
 				elif line.startswith('<doc'):
-					filename = upcase_first_letter(line.split('title="')[1].split('">')[0]).replace(' ', '_')
+					file_name = line.split('title="')[1].split('">')[0].replace(' ', '_').capitalize()
 				else:
-					with open(dirname + '/' + filename, '+a') as output:
+					with open(directory_name + '/' + file_name, '+a') as output_file:
 						if not line == '\n':
-							output.write(line)
+							output_file.write(line)
 		os.remove(name)
 	return None
 
 if __name__ == "__main__":
 	directory = sys.argv[1]
 
-	surfForms = loadSurfaceForms("data/AnchorDictionary.csv", 5)
-	gender = loadDictionary('data/gender.csv')
+	surface_forms = load_surface_forms("data/AnchorDictionary.csv", 5)
+	gender = load_dictionary('data/gender.csv')
 
 	names = []
-	for root, dirs, files in os.walk(directory):
-		for file in files:
-			names.append(root + '/' + file)
+	for root, directories, files in os.walk(directory):
+		for f in files:
+			names.append(root + '/' + f)
 	
-	Parallel(n_jobs = 8, verbose = 51)(delayed(replaceAnchorText)(name) for name in names)
+	Parallel(n_jobs = 8, verbose = 51)(delayed(replace_anchor_text)(name) for name in names)

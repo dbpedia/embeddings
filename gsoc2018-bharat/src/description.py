@@ -13,12 +13,12 @@ def main():
 	-----------
 	dictionary[entity] = abstract
 	"""
-	file, dictionary = sys.argv[1], sys.argv[2]
+	wiki_file, dictionary = sys.argv[1], sys.argv[2]
 	count = 0
 	table = str.maketrans('', '', string.punctuation)
-	with open(file, 'r') as infile:
-		with open(dictionary, 'w+') as outfile:
-			for line in infile:
+	with open(file, 'r') as input_file:
+		with open(dictionary, 'w+') as output_file:
+			for line in input_file:
 				"""
 				I am trying to remove the url from the doc to get the
 				title and then cleaning the abstract for that title.
@@ -41,8 +41,8 @@ def main():
 
 					# Plain text abstracts stored for each and every resource in the dump
 					description[entity] = abstract
-					json.dump(description, outfile)
-					outfile.write('\n')
+					json.dump(description, output_file)
+					output_file.write('\n')
 	print("Total abstracts : " + str(count))
 	
 if __name__ == '__main__':

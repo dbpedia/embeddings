@@ -11,53 +11,53 @@ for out of vocabulary words with the help of previously identified n-gram embedd
 logging.basicConfig(format='%(levelname)s : %(message)s', level=logging.INFO)
 logging.root.level = logging.INFO
 
-def train_fasttext(infile, outfile, skipgram, loss, size, epochs):
+def train_fasttext(input_file, output_file, skipgram, loss, size, epochs):
 	"""
 	train_fasttext(args**) -> Takes the input file, the output file and the model hyperparameters as arguments and trains the model accordingly.
 	The model is saved at the output location.
 	Arguments
 	---------
-	infile : Input pre-processed wiki dump
-	outfile : Output directory to save the model.
+	input_file : Input pre-processed wiki dump
+	output_file : Output directory to save the model.
 	skipgram : Layers of the model (0 - CBOW, 1 - Skipgram)
 	loss : Loss Function (0 - Negative Sampling, 1 - Heirarichal Loss)
 	size : Embedding size (100 ~ 300)
 	epochs : Number of epochs
 	"""
-	sentence = LineSentence(infile)
+	sentence = LineSentence(input_file)
 
 	model = FastText(sentence, sg=skipgram, hs=loss, size=size, alpha=0.05, window=5,
 					min_count=5, min_n=2, max_n=5, workers=3, iter=epochs)
 
-	model.save(outfile)
+	model.save(output_file)
 
-def train_word2vec(infile, outfile, skipgram, loss, size, epochs):
+def train_word2vec(input_file, output_file, skipgram, loss, size, epochs):
 	"""
 	train_word2vec(args**) -> Takes the input file, the output file and the model hyperparameters as arguments and trains the model accordingly.
 	The model is saved at the output location.
 	Arguments
 	---------
-	infile : Input pre-processed wiki dump
-	outfile : Output directory to save the model.
+	input_file : Input pre-processed wiki dump
+	output_file : Output directory to save the model.
 	skipgram : Layers of the model (0 - CBOW, 1 - Skipgram)
 	loss : Loss Function (0 - Negative Sampling, 1 - Heirarichal Loss)
 	size : Embedding size (100 ~ 300)
 	epochs : Number of epochs
 	"""
-	sentence = LineSentence(infile)
+	sentence = LineSentence(input_file)
 
 	model = Word2Vec(sentence, sg=skipgram, hs=loss, size=size, alpha=0.05, window=5,
 					min_count=5, workers=3, iter=epochs)
 
-	model.save(outfile)
+	model.save(output_file)
 
 def main(args):
-	infile, outfile, mode = args.input, args.output, args.mode
+	input_file, output_file, mode = args.input, args.output, args.mode
 	skipgram, loss, size, epochs = int(args.skipgram), int(args.loss), int(args.size), int(args.epochs)
 	if mode == "fasttext":
-		train_fasttext(infile, outfile, skipgram, loss, size, epochs)
+		train_fasttext(input_file, output_file, skipgram, loss, size, epochs)
 	else:
-		train_word2vec(infile, outfile, skipgram, loss, size, epochs)
+		train_word2vec(input_file, output_file, skipgram, loss, size, epochs)
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser()
