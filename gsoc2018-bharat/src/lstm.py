@@ -66,7 +66,7 @@ def load_mappings(descriptions, wv):
                 entities.append(v)
                 abstracts.append(t)
                 count += 1
-            except KeyError:
+            except (IndexError, KeyError) as _:
                 continue
     logging.info('resources read into np stack of length : {0}'.format(count))
 
