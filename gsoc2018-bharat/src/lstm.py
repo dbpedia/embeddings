@@ -46,28 +46,28 @@ def load_mappings(descriptions, wv):
         for line in input_file:
             if count % 5000 == 0:
                 logging.info('reading resource # {0}'.format(count))
-                json_line = json.loads(line)
+            json_line = json.loads(line)
 
-                # Resource is extracted
-                ent = [_ for _ in json_line.keys()][0]
+            # Resource is extracted
+            ent = [_ for _ in json_line.keys()][0]
 
-                # Description is extracted and split into tokens
-                desc = json_line[ent].split()
-                try:
-                    # Using a temporary array to pad the original embedding
-                    # can be replaced by np.pad()
-                    t = np.zeros(shape, dtype=np.float32)
-                    v = np.array(wv.get_vector(ent), dtype=np.float32)
-                    r = np.array(list(map(lambda x: wv.get_vector(x), desc)),
-                                 dtype=np.float32)
+            # Description is extracted and split into tokens
+            desc = json_line[ent].split()
+            try:
+                # Using a temporary array to pad the original embedding
+                # can be replaced by np.pad()
+                t = np.zeros(shape, dtype=np.float32)
+                v = np.array(wv.get_vector(ent), dtype=np.float32)
+                r = np.array(list(map(lambda x: wv.get_vector(x), desc)),
+                             dtype=np.float32)
 
-                    # Padding the array to a fixed shape.
-                    t[:r.shape[0], :r.shape[1]] = r
-                    entities.append(v)
-                    abstracts.append(t)
-                    count += 1
-                except KeyError:
-                    continue
+                # Padding the array to a fixed shape.
+                t[:r.shape[0], :r.shape[1]] = r
+                entities.append(v)
+                abstracts.append(t)
+                count += 1
+            except KeyError:
+                continue
     logging.info('resources read into np stack of length : {0}'.format(count))
 
     # Currently the process is killed here because of memory pressure.
