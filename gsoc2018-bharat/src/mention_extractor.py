@@ -170,9 +170,10 @@ def split_files(directory):
 
 if __name__ == "__main__":
     directory = sys.argv[1]
+    anchor_file, gender_file = sys.argv[2], sys.argv[3]
 
-    surface_forms = load_surface_forms("data/AnchorDictionary.csv", 5)
-    gender = load_dictionary('data/gender.csv')
+    surface_forms = load_surface_forms(anchor_file, 5)
+    gender = load_dictionary(gender_file)
 
     names = []
     for root, directories, files in os.walk(directory):
