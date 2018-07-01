@@ -49,7 +49,6 @@ class DescriptionEncoder(nn.Module):
 
 def train(x, y):
     epochs = 10
-    shape = (500, 300)
     hidden_size = 300
     model = DescriptionEncoder(hidden_size)
     inputs = x[:100]
@@ -80,6 +79,7 @@ def validate(model):
     m = FastText.load('model/entity_fasttext_n300')
     wv = m.wv
     del m
+    shape = (500, 300)
 
     with open('data/train.json') as input_file:
         for line in input_file:
