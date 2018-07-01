@@ -1,6 +1,7 @@
 import torch
 import torch.autograd as autograd
 import torch.nn as nn
+from torch.autograd import Variable
 # import torch.nn.functional as F
 import torch.optim as optim
 import numpy as np
@@ -8,6 +9,7 @@ import json
 from gensim.models import FastText
 import logging
 import sys
+import matplotlib.pyplot as plt
 
 torch.manual_seed(1)
 
@@ -35,12 +37,14 @@ class DescriptionEncoder(nn.Module):
         self.hidden_size = hidden_size
 
         self.inp = nn.Linear(hidden_size, hidden_size)
+        # self.lstm = nn.LSTM(hidden_size, hidden_size)
         self.lstm = nn.LSTM(hidden_size, hidden_size, 2, dropout=0.05)
-        self.rnn = nn.RNN(hidden_size, hidden_size)
+        self.rnn = nn.RNN(hidden_size, hidden_size, 2)
         self.out = nn.Linear(hidden_size, hidden_size)
 
     def forward(self, inp_desc, hidden=None):
         inp_desc = self.inp(inp_desc)
+        # output, hidden = self.rnn(self.lstm(inp_desc)[0])
         output, hidden = self.rnn(self.lstm(inp_desc)[0])
         output = self.out(output)
 
@@ -48,31 +52,41 @@ class DescriptionEncoder(nn.Module):
 
 
 def train(x, y):
-    epochs = 10
+    epochs = 500
     hidden_size = 300
     model = DescriptionEncoder(hidden_size)
-    inputs = x[:100]
-    labels = y[:100]
-    criterion = nn.MSELoss()
+    inputs = x[:10]
+    labels = y[:10]
+    criterion = nn.CosineEmbeddingLoss()
     optimizer = optim.SGD(model.parameters(), lr=0.05)
     count = 0
-    # losses = np.zeros(epochs)
+    losses = np.zeros(epochs)
     logging.info('training on {0} samples'.format(len(inputs)))
     for epoch in range(epochs):
+        flags = autograd.Variable(torch.ones(1))
         count = 0
         # logging.info('training epoch {0}'.format(epoch + 1))
         for i, l in zip(inputs, labels):
             output, hidden = model(autograd.Variable(torch.tensor([i])), None)
             optimizer.zero_grad()
-            loss = criterion(output[0][-1], autograd.Variable(torch.tensor(l)))
+            # logging.info('{0}'.format(output[0][-1].unsqueeze(1).t().size()))
+            loss = criterion(output[0][-1].unsqueeze(1).t(),
+                             Variable(torch.tensor([l])),
+                             flags)
             loss.backward()
             optimizer.step()
             count + 1
         logging.info(
             'completed epoch {0}, loss : {1}'.format(epoch + 1, loss.item()))
+        losses[epoch] = loss.item()
     logging.info('saving the model to model/description_encoder')
     torch.save(model, 'model/description_encoder')
     validate(model)
+    plt.plot(losses)
+    plt.title('Model Loss')
+    plt.ylabel('loss')
+    plt.xlabel('epoch')
+    plt.show()
 
 
 def validate(model):
