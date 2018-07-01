@@ -4,8 +4,8 @@ import torch.nn as nn
 # import torch.nn.functional as F
 import torch.optim as optim
 import numpy as np
-# import json
-# from gensim.models import FastText
+import json
+from gensim.models import FastText
 import logging
 import sys
 
@@ -48,20 +48,21 @@ class RNNModel(nn.Module):
 
 
 def train(x, y):
-    epochs = 100
+    epochs = 10
+    shape = (500, 300)
     hidden_size = 300
     model = RNNModel(hidden_size)
-    # inputs = x[:10]
-    # labels = y[:10]
+    inputs = x[:100]
+    labels = y[:100]
     criterion = nn.MSELoss()
-    optimizer = optim.SGD(model.parameters(), lr=0.01)
+    optimizer = optim.SGD(model.parameters(), lr=0.05)
     count = 0
     # losses = np.zeros(epochs)
-    logging.info('train on {0} samples'.format(len(x)))
+    logging.info('training on {0} samples'.format(len(inputs)))
     for epoch in range(epochs):
         count = 0
         # logging.info('training epoch {0}'.format(epoch + 1))
-        for i, l in zip(x[:10], y[:10]):
+        for i, l in zip(inputs, labels):
             output, hidden = model(autograd.Variable(torch.tensor([i])), None)
             optimizer.zero_grad()
             loss = criterion(output[0][-1], autograd.Variable(torch.tensor(l)))
@@ -70,6 +71,32 @@ def train(x, y):
             count + 1
         logging.info(
             'completed epoch {0}, loss : {1}'.format(epoch + 1, loss.item()))
+    logging.info('saving the model to model/description_encoder')
+    torch.save(model, 'model/description_encoder')
+    validate(model)
+
+
+def validate(model):
+    m = FastText.load('model/entity_fasttext_n300')
+    wv = m.wv
+    del m
+
+    with open('data/train.json') as input_file:
+        for line in input_file:
+            json_line = json.loads(line)
+            target = [_ for _ in json_line.keys()][0]
+            desc = json_line[target].split()
+            t = np.zeros(shape, dtype=np.float32)
+            # v = np.array(wv.get_vector(ent), dtype=np.float32)
+            r = np.array(list(map(lambda x: wv.get_vector(x), desc)),
+                         dtype=np.float32)
+            t[:r.shape[0], :r.shape[1]] = r
+            p = model(autograd.Variable(torch.tensor([t])))[0][0][-1]
+            p = p.detach().numpy()
+            print('Entity : ' + target)
+            print('Predicted : ', end='')
+            print(wv.similar_by_vector(p))
+            break
 
 
 if __name__ == '__main__':
