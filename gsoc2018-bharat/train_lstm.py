@@ -29,9 +29,9 @@ def load_tensors(directory):
     train(X, y)
 
 
-class RNNModel(nn.Module):
+class DescriptionEncoder(nn.Module):
     def __init__(self, hidden_size):
-        super(RNNModel, self).__init__()
+        super(DescriptionEncoder, self).__init__()
         self.hidden_size = hidden_size
 
         self.inp = nn.Linear(hidden_size, hidden_size)
@@ -51,7 +51,7 @@ def train(x, y):
     epochs = 10
     shape = (500, 300)
     hidden_size = 300
-    model = RNNModel(hidden_size)
+    model = DescriptionEncoder(hidden_size)
     inputs = x[:100]
     labels = y[:100]
     criterion = nn.MSELoss()
