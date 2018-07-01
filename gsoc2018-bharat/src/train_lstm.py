@@ -38,7 +38,7 @@ class DescriptionEncoder(nn.Module):
 
         self.inp = nn.Linear(hidden_size, hidden_size)
         # self.lstm = nn.LSTM(hidden_size, hidden_size)
-        self.lstm = nn.LSTM(hidden_size, hidden_size, 2, dropout=0.05)
+        self.lstm = nn.LSTM(hidden_size, hidden_size, 2)
         self.rnn = nn.RNN(hidden_size, hidden_size, 2)
         self.out = nn.Linear(hidden_size, hidden_size)
 
@@ -55,10 +55,10 @@ def train(x, y):
     epochs = 500
     hidden_size = 300
     model = DescriptionEncoder(hidden_size)
-    inputs = x[:10]
-    labels = y[:10]
+    inputs = x
+    labels = y
     criterion = nn.CosineEmbeddingLoss()
-    optimizer = optim.SGD(model.parameters(), lr=0.05)
+    optimizer = optim.SGD(model.parameters(), lr=0.01)
     count = 0
     losses = np.zeros(epochs)
     logging.info('training on {0} samples'.format(len(inputs)))
