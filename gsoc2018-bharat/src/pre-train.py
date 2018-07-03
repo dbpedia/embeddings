@@ -68,8 +68,7 @@ def train_word2vec(input_file, output_file, skipgram, loss, size, epochs):
 
 def main(args):
     input_file, output_file, mode = args.input, args.output, args.mode
-    skipgram, loss, size, epochs = int(args.skipgram), int(args.loss),
-    int(args.size), int(args.epochs)
+    skipgram, loss, size, epochs = int(args.skipgram), int(args.loss), int(args.size), int(args.epochs)
     if mode == "fasttext":
         train_fasttext(input_file, output_file, skipgram, loss, size, epochs)
     else:
