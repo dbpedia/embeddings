@@ -2,7 +2,6 @@ import torch
 import torch.autograd as autograd
 import torch.nn as nn
 from torch.autograd import Variable
-# import torch.nn.functional as F
 import torch.optim as optim
 import numpy as np
 import json
@@ -24,11 +23,11 @@ def create_mappings():
     Input to an LSTM must be a 3D tensor. For that, I
     am reading all the descriptions line by line and
     storing their embeddings row wise into a numpy
-    array of 3 dimensions and shape (n, 500, 300).
+    array of 3 dimensions and shape (batch_size, seq_len, embed_size).
     """
     count = 0
     saved_model = 'model/entity_fasttext_n100'
-    descriptions_file = 'data/descriptions.json'
+    descriptions_file = 'data/train.json'
     model = FastText.load(saved_model)
     wv = model.wv
     del model
@@ -44,36 +43,11 @@ def create_mappings():
             if count % 1000 == 0:
                 logging.info('reading resource # {0}'.format(count))
 
+            # Read the entire dictionary in first pass
             json_line = json.loads(line)
             lines.append(json_line)
             count += 1
-            # Resource is extracted
-            # ent = [_ for _ in json_line.keys()][0]
 
-            # Description is extracted and split into tokens
-            # desc = json_line[ent].split()
-            # try:
-            # Using a temporary array to pad the original embedding
-            # can be replaced by np.pad()
-            # t = np.zeros(shape, dtype=np.float32)
-            # v = np.array(wv.get_vector(ent), dtype=np.float32)
-            # r = np.array(list(map(lambda x: wv.get_vector(x),
-            # desc)), dtype=np.float32)
-
-            # Padding the array to a fixed shape.
-            # t[:r.shape[0], :r.shape[1]] = r
-            # entities.append(v)
-            # abstracts.append(r)
-            # except (IndexError, KeyError) as _:
-            # continue
-    # logging.info('resources read into np stack : {0}'.format(count))
-    # entities = list(map(lambda x: [_ for _ in x.keys()][0], lines))
-    # abstracts = [l[ent] for l, ent in zip(lines, entities)]
-    # entities = [np.array(wv.get_vector(ent),
-    #                      dtype=np.float32) for ent in entities]
-    # abstracts = [np.array(list(map(lambda x: wv.get_vector(x),
-    #                                desc.split())),
-    #                       dtype=np.float32) for desc in abstracts]
     for l in lines:
         ent = [_ for _ in l.keys()][0]
         desc = l[ent].split()
@@ -85,6 +59,15 @@ def create_mappings():
             abstracts.append(d)
         except (IndexError, KeyError) as _:
             continue
+
+    logging.info('resources read into np stack : {0}'.format(count))
+    entities = list(map(lambda x: [_ for _ in x.keys()][0], lines))
+    abstracts = [l[ent] for l, ent in zip(lines, entities)]
+    entities = [np.array(wv.get_vector(ent),
+                         dtype=np.float32) for ent in entities]
+    abstracts = [np.array(list(map(lambda x: wv.get_vector(x),
+                                   desc.split())),
+                          dtype=np.float32) for desc in abstracts]
 
     logging.info(f'{len(abstracts)} mappings generated')
 
@@ -106,6 +89,17 @@ def load_tensors(directory):
 
 
 def train(x, y, wv):
+    """
+    This method takes the inputs, and the labels
+    and trains the LSTM network to predict the
+    embeddings based on the input sequnce.
+
+    Arguments
+    ---------
+    x : List of input descriptions
+    y : List of target entity embeddings
+    wv : Keyed Word Vectors for pre-trained embeddings
+    """
     epochs = 10
     embed_size = 100
     hidden_size = 50
@@ -118,7 +112,7 @@ def train(x, y, wv):
     progress = 0.0
     criterion = nn.CosineEmbeddingLoss()
     # criterion = nn.MSELoss()
-    optimizer = optim.SGD(model.parameters(), lr=0.2)
+    optimizer = optim.SGD(model.parameters(), lr=0.4)
     count = 0
     itr_p = 0.0
     losses = np.zeros(epochs)
@@ -129,20 +123,13 @@ def train(x, y, wv):
         flags = Variable(torch.ones(1))
         count = 0
         hidden = model.init_hidden()
-        # hidden = None
-        # logging.info('training epoch {0}'.format(epoch + 1))
         for i, l in zip(inputs, labels):
             count += 1
             progress = (count / itr) * 100
-            # print(len(i))
             print('INFO : PROGRESS : {0:.1f} %'.format(progress), end='\r')
             for word in i:
-                # try:
                 output, hidden = model(
                     Variable(torch.tensor([[word]])))
-                # logging.info(f'{output.size()}')
-                # except TypeError:
-                #     continue
             optimizer.zero_grad()
             # loss = criterion(output[0][0],
             #                  Variable(torch.tensor(l)))
@@ -150,6 +137,7 @@ def train(x, y, wv):
                              Variable(torch.tensor([l])),
                              flags)
             loss.backward(retain_graph=True)
+            # loss.backward()
             optimizer.step()
         logging.info(
             'completed epoch {0}, loss : {1}'.format(epoch + 1, loss.item()))
@@ -165,43 +153,33 @@ def train(x, y, wv):
 
 
 def validate(model, wv):
-    # m = FastText.load('model/entity_fasttext_n100')
-    # wv = m.wv
-    # del m
     shape = (500, 100)
 
-    with open('data/train.json', 'r') as input_file:
+    with open('data/test.json', 'r') as input_file:
         with open('data/validate', 'w+') as output_file:
             for line in input_file:
                 # line = next(input_file)
                 json_line = json.loads(line)
                 target = [_ for _ in json_line.keys()][0]
                 desc = json_line[target].split()
-                # t = np.zeros(shape, dtype=np.float32)
                 try:
                     r = np.array(list(map(lambda x: wv.get_vector(x), desc)),
                                  dtype=np.float32)
                 except KeyError:
                     continue
-                # out = len(r)
-                # t[:r.shape[0], :r.shape[1]] = r
                 for word in r:
                     try:
                         p, hidden = model(Variable(torch.tensor([[word]])))
                     except TypeError:
                         continue
-                # logging.info(f'{p}')
                 p = p[0][0].detach().numpy()
                 print('Entity : ' + target)
                 print('Predicted : ', end='')
                 print(wv.similar_by_vector(p))
                 output_file.write(target + '\n')
                 output_file.write(str(wv.similar_by_vector(p)) + '\n')
-                break
 
 
 if __name__ == '__main__':
-    # directory = sys.argv[1]
-    # load_tensors(directory)
     x, y, wv = create_mappings()
     train(x, y, wv)
