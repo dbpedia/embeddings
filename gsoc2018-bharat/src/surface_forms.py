@@ -44,7 +44,7 @@ def make_dictionary(directory):
                 dictionary[entity] = entity
                 dictionary[entity] += ';' + anchor
             print(f'Anchor Text found : {counter}', end='\r')
-    with open('../data/AnchorDictionary.csv', '+w') as output_file:
+    with open('data/AnchorDictionary.csv', '+w') as output_file:
         for entity in dictionary:
             print('Writing to file: ' + entity, end='\r')
             output_file.write(dictionary[entity] + '\n')
