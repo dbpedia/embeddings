@@ -61,12 +61,16 @@ with open(wiki_file, 'w+') as output_file:
 
                         # Obtain just the processed text
                         # from the multiple files
+                        line = line.replace('resource/', '')
+                        line = line.lower().translate(table)
                         output_file.write(line)
 
 count = 0
 
 # Pattern to extract title from the document url
 pattern = r'(title=)+(.\w+.)*'
+punctuation = '!"#$%&\'()*+,./:;<=>?@[\\]^`{|}~'
+table = str.maketrans('', '', punctuation)
 with open(output, 'w+') as output_dictionary:
     for root, directories, files in os.walk(root_directory):
         for f in files:
@@ -79,10 +83,11 @@ with open(output, 'w+') as output_dictionary:
                         try:
                             ent = re.search(pattern, prev).group().strip('"')
                             ent = ent.replace(' ', '_').replace('title="', '')
-                            ent = "resource/" + ent
+                            ent = ent.lower().translate(table)
 
                             # Line serves the purpose of description
-                            dictionary[ent] = line
+                            line = line.replace('resource/', '')
+                            dictionary[ent] = line.lower().translate(table)
                             json.dump(dictionary, output_dictionary)
                             output_dictionary.write('\n')
                             count += 1
