@@ -5,7 +5,8 @@ import json
 import re
 
 root_directory, wiki_file, output = sys.argv[1], sys.argv[2], sys.argv[3]
-
+punctuation = '!"#$%&\'()*+,./:;<=>?@[\\]^`{|}~'
+table = str.maketrans('', '', punctuation)
 """
 The following snippet is used to count the
 unique resources in the entire corpus.
@@ -69,8 +70,6 @@ count = 0
 
 # Pattern to extract title from the document url
 pattern = r'(title=)+(.\w+.)*'
-punctuation = '!"#$%&\'()*+,./:;<=>?@[\\]^`{|}~'
-table = str.maketrans('', '', punctuation)
 with open(output, 'w+') as output_dictionary:
     for root, directories, files in os.walk(root_directory):
         for f in files:
