@@ -27,7 +27,7 @@ def create_mappings():
     """
     count = 0
     saved_model = 'model/entity_fasttext_n100'
-    descriptions_file = 'data/train.json'
+    descriptions_file = 'data/abstracts.json'
     model = FastText.load(saved_model)
     wv = model.wv
     del model
@@ -60,14 +60,14 @@ def create_mappings():
         except (IndexError, KeyError) as _:
             continue
 
-    logging.info('resources read into np stack : {0}'.format(count))
-    entities = list(map(lambda x: [_ for _ in x.keys()][0], lines))
-    abstracts = [l[ent] for l, ent in zip(lines, entities)]
-    entities = [np.array(wv.get_vector(ent),
-                         dtype=np.float32) for ent in entities]
-    abstracts = [np.array(list(map(lambda x: wv.get_vector(x),
-                                   desc.split())),
-                          dtype=np.float32) for desc in abstracts]
+    # logging.info('resources read into np stack : {0}'.format(count))
+    # entities = list(map(lambda x: [_ for _ in x.keys()][0], lines))
+    # abstracts = [l[ent] for l, ent in zip(lines, entities)]
+    # entities = [np.array(wv.get_vector(ent),
+    #                      dtype=np.float32) for ent in entities]
+    # abstracts = [np.array(list(map(lambda x: wv.get_vector(x),
+    #                                desc.split())),
+    #                       dtype=np.float32) for desc in abstracts]
 
     logging.info(f'{len(abstracts)} mappings generated')
 
@@ -100,7 +100,7 @@ def train(x, y, wv):
     y : List of target entity embeddings
     wv : Keyed Word Vectors for pre-trained embeddings
     """
-    epochs = 10
+    epochs = 15
     embed_size = 100
     hidden_size = 50
     seq_len = 1
@@ -155,7 +155,7 @@ def train(x, y, wv):
 def validate(model, wv):
     shape = (500, 100)
 
-    with open('data/test.json', 'r') as input_file:
+    with open('data/abstracts.json', 'r') as input_file:
         with open('data/validate', 'w+') as output_file:
             for line in input_file:
                 # line = next(input_file)
