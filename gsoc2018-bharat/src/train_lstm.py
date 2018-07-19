@@ -8,6 +8,7 @@ import json
 from gensim.models import FastText
 import logging
 import sys
+import argparse
 import matplotlib.pyplot as plt
 
 from Encoder import DescriptionEncoder
@@ -18,7 +19,7 @@ logging.basicConfig(format='%(levelname)s : %(message)s', level=logging.INFO)
 logging.root.level = logging.INFO
 
 
-def create_mappings():
+def create_mappings(saved_model_file, saved_descriptions_file):
     """
     Input to an LSTM must be a 3D tensor. For that, I
     am reading all the descriptions line by line and
@@ -26,8 +27,8 @@ def create_mappings():
     array of 3 dimensions and shape (batch_size, seq_len, embed_size).
     """
     count = 0
-    saved_model = 'model/entity_fasttext_n100'
-    descriptions_file = 'data/abstracts.json'
+    saved_model = saved_model_file
+    descriptions_file = saved_descriptions_file
     model = FastText.load(saved_model)
     wv = model.wv
     del model
@@ -88,7 +89,7 @@ def load_tensors(directory):
     train(X, y)
 
 
-def train(x, y, wv):
+def train(x, y, wv, model, epochs, abstracts_file):
     """
     This method takes the inputs, and the labels
     and trains the LSTM network to predict the
@@ -100,14 +101,13 @@ def train(x, y, wv):
     y : List of target entity embeddings
     wv : Keyed Word Vectors for pre-trained embeddings
     """
-    epochs = 15
-    embed_size = 100
-    hidden_size = 50
-    seq_len = 1
-    num_layers = 2
-    model = DescriptionEncoder(embed_size, hidden_size, seq_len, num_layers)
-    inputs = x
-    labels = y
+    # epochs = 100
+    # embed_size = 100
+    # hidden_size = 50
+    # seq_len = 1
+    # num_layers = 2
+    inputs = x[:20]
+    labels = y[:20]
     itr = len(inputs)
     progress = 0.0
     criterion = nn.CosineEmbeddingLoss()
@@ -129,22 +129,23 @@ def train(x, y, wv):
             print('INFO : PROGRESS : {0:.1f} %'.format(progress), end='\r')
             for word in i:
                 output, hidden = model(
-                    Variable(torch.tensor([[word]])))
+                    Variable(torch.tensor([[word]])),
+                    hidden)
             optimizer.zero_grad()
             # loss = criterion(output[0][0],
             #                  Variable(torch.tensor(l)))
             loss = criterion(output[0],
                              Variable(torch.tensor([l])),
                              flags)
-            loss.backward(retain_graph=True)
-            # loss.backward()
+            # loss.backward(retain_graph=True)
+            loss.backward()
             optimizer.step()
         logging.info(
             'completed epoch {0}, loss : {1}'.format(epoch + 1, loss.item()))
         losses[epoch] = loss.item()
     logging.info('saving the model to model/description_encoder')
     torch.save(model, 'model/description_encoder')
-    validate(model, wv)
+    validate(model, wv, abstracts_file)
     # plt.plot(losses)
     # plt.title('Model Loss')
     # plt.ylabel('loss')
@@ -152,34 +153,67 @@ def train(x, y, wv):
     # plt.show()
 
 
-def validate(model, wv):
+def validate(model, wv, abstracts_file):
     shape = (500, 100)
 
-    with open('data/abstracts.json', 'r') as input_file:
-        with open('data/validate', 'w+') as output_file:
+    with open(abstracts_file, 'r') as input_file:
+        with open('data/validate_output', 'w+') as output_file:
             for line in input_file:
                 # line = next(input_file)
                 json_line = json.loads(line)
                 target = [_ for _ in json_line.keys()][0]
+                d = json_line[target]
                 desc = json_line[target].split()
                 try:
                     r = np.array(list(map(lambda x: wv.get_vector(x), desc)),
                                  dtype=np.float32)
                 except KeyError:
                     continue
+                hidden = model.init_hidden()
                 for word in r:
                     try:
-                        p, hidden = model(Variable(torch.tensor([[word]])))
-                    except TypeError:
+                        p, hidden = model(Variable(torch.tensor([[word]])),
+                                          hidden)
+                        p = p[0][0].detach().numpy()
+                    except (TypeError, IndexError) as _:
                         continue
-                p = p[0][0].detach().numpy()
                 print('Entity : ' + target)
+                print('Abstract : ' + d, end='')
                 print('Predicted : ', end='')
                 print(wv.similar_by_vector(p))
                 output_file.write(target + '\n')
-                output_file.write(str(wv.similar_by_vector(p)) + '\n')
+                output_file.write(d)
+                # output_file.write(str(wv.similar_by_vector(p)) + '\n')
+                output_file.write(str(p) + '\n')
+                # break
 
 
 if __name__ == '__main__':
-    x, y, wv = create_mappings()
-    train(x, y, wv)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--model", "-m", default="model/entity_fasttext_n100",
+                        help="saved pre-trained embeddings")
+    parser.add_argument("--input", "-i", default="data/abstracts.json",
+                        help="descriptions file")
+    parser.add_argument("--validate", "-v", default="data/abstracts.json",
+                        help="abstracts file to validate the output")
+    parser.add_argument("--epochs", "-e", default="150",
+                        help="set the number of epochs for training")
+    parser.add_argument("--size", "-s", default="100",
+                        help="set the size of the embeddings")
+    parser.add_argument("--hidden_layer", "-o", default="50",
+                        help="set the size of the hidden layer")
+    parser.add_argument("--seq_len", "-l", default="1",
+                        help="set the length of the input sequence")
+    parser.add_argument("--num_layers", "-n", default="2",
+                        help="set the number of hidden layers in RNN")
+    args = parser.parse_args()
+    saved_model = args.model
+    descriptions_file = args.input
+    abstracts_file = args.validate
+    model = DescriptionEncoder(int(args.size),
+                               int(args.hidden_layer),
+                               int(args.seq_len),
+                               int(args.num_layers))
+    epochs = int(args.epochs)
+    x, y, wv = create_mappings(saved_model, descriptions_file)
+    train(x, y, wv, model, epochs, abstracts_file)
