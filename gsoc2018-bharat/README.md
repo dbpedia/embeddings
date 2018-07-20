@@ -68,31 +68,22 @@ $ python src/pre-train.py -i data/text8 -o model/entity_fasttext_n100 -m fasttex
 
 ### Training the LSTM model
 
+Our model is a Recurrent Neural Network, with two linear layers for input and output with stacked LSTM with RNN that encodes the input description/abstract into a single word vector. That word vector can be combined with the entity for which the description was provided to obtain the embedding. Hyperparameters and the model architecture are not rigid and can be changed before training albeit I have set some defaults that I used while training.
+- Files
+  - Saved Model ( *-m* )
+  - Input file with descriptions ( *-i* )
+  - Output file to store the predicted embeddings ( *-v* )
+- Model
+  - Epochs, *-e*
+  - Embedding size / Input Size, *-s*
+  - Hidden layer size, *-o*
+  - Sequence Length, *-l*
+  - Number of layers, *-n*
+
+Here are some possible ways to use the script:
 ```
 $ python src/train_lstm.py
+$ python src/train_lstm.py -e 50
+$ python src/train_lstm.py -m {saved_model} -e 10 -s 300
 ```
-
-Next, we try to see how these pre-trained embeddings perform on the [Google Analogy Task](http://download.tensorflow.org/data/questions-words.txt). For this we have the [analogy.py](https://github.com/tramplingWillow/ComplexEmbeddings/blob/master/src/analogy.py).<br>
-*Updates are to be made so that the script evaluates the model for the entire dataset.*
-
-```shell
-$ python analogy.py -i data/questions-words.txt -m model/pre_wiki
-Question: high is to higher as great is to ?
-Answer: greater
-Predicted: greater
-Question: glendale is to arizona as akron is to ?
-Answer: ohio
-Predicted: ohio
-Question: ethical is to unethical as comfortable is to ?
-Answer: uncomfortable
-Predicted: comfortably
-Question: netherlands is to dutch as brazil is to ?
-Answer: brazilian
-Predicted: brazilian
-Question: free is to freely as happy is to ?
-Answer: happily
-Predicted: happily
-Question: luanda is to angola as monrovia is to ?
-Answer: liberia
-Predicted: liberia
-```
+Execute the command without any additional arguments to run the script with the default values.
