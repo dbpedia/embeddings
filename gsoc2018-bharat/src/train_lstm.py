@@ -75,20 +75,6 @@ def create_mappings(saved_model_file, saved_descriptions_file):
     return abstracts, entities, wv
 
 
-def load_tensors(directory):
-    """
-    Input to an LSTM must be a 3D tensor. For that, I
-    am reading all the descriptions line by line and
-    storing their embeddings row wise into a numpy
-    array of 3 dimensions and shape (n, 200, 100).
-    """
-    logging.info('loading saved embeddings')
-    X = np.load(directory + '/description.npy')
-    y = np.load(directory + '/entity.npy')
-    logging.info('loaded {0} saved embeddings'.format(len(X)))
-    train(X, y)
-
-
 def train(x, y, wv, model, epochs, abstracts_file):
     """
     This method takes the inputs, and the labels
@@ -106,8 +92,8 @@ def train(x, y, wv, model, epochs, abstracts_file):
     # hidden_size = 50
     # seq_len = 1
     # num_layers = 2
-    inputs = x[:20]
-    labels = y[:20]
+    inputs = x
+    labels = y
     itr = len(inputs)
     progress = 0.0
     criterion = nn.CosineEmbeddingLoss()
@@ -137,8 +123,8 @@ def train(x, y, wv, model, epochs, abstracts_file):
             loss = criterion(output[0],
                              Variable(torch.tensor([l])),
                              flags)
-            # loss.backward(retain_graph=True)
-            loss.backward()
+            loss.backward(retain_graph=True)
+#             loss.backward()
             optimizer.step()
         logging.info(
             'completed epoch {0}, loss : {1}'.format(epoch + 1, loss.item()))
