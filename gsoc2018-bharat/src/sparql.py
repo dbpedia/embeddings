@@ -37,10 +37,10 @@ async def fetch_data(q, i):
     print(f'INFO : sending request # {i + 1}')
     sparql.setQuery(q)
     sparql.setReturnFormat(JSON)
-    try:
-        results = sparql.query().convert()
-    except (HTTPError, EndPointInternalError) as _:
-        fetch_data(q, i)
+    # try:
+    results = sparql.query().convert()
+    # except (HTTPError, EndPointInternalError) as _:
+    #     fetch_data(q, i)
 
     data = results['results']['bindings']
     final_pool = final_pool + data
@@ -64,9 +64,10 @@ with open('data/dbpedia_dictionary.json', 'w+') as abstract_dictionary:
             entity = entity.lower()
             a[entity] = line['abstract']['value'].lower()
             t = line['p']['value']
-            c[entity] = t.replace('http://dbpedia.org/ontology/', '')
-            json.dump(a, abstract_dictionary)
-            abstract_dictionary.write('\n')
-            json.dump(c, class_dictionary)
-            class_dictionary.write('\n')
-            count += 1
+            if 'http://dbpedia.org/ontology/' in t:
+                c[entity] = t.replace('http://dbpedia.org/ontology/', '')
+                json.dump(a, abstract_dictionary)
+                abstract_dictionary.write('\n')
+                json.dump(c, class_dictionary)
+                class_dictionary.write('\n')
+                count += 1
