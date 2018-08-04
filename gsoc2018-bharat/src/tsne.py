@@ -5,17 +5,19 @@ import json
 
 
 X = []
-lines = []
+lines = set()
+dictionary = {}
 labels = []
-with open('data/embeddings_db.json', 'r') as db_file:
+with open('data/person_db.json', 'r') as db_file:
     for line in db_file:
         jsonline = json.loads(line)
-        lines.append(jsonline)
+        dictionary.update(jsonline)
+        lines.add([_ for _ in jsonline.keys()][0])
 
 
 for l in lines:
-    entity = [_ for _ in l.keys()][0]
-    X.append(np.array(l[entity]))
+    entity = l
+    X.append(np.array(dictionary[entity]))
     labels.append(entity)
 
 

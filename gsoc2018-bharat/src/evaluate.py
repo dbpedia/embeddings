@@ -14,7 +14,7 @@ X = []
 labels = []
 
 
-with open('data/dbpedia_embeddings_db.json', 'r') as db_file:
+with open('data/organisation_db.json', 'r') as db_file:
     for line in db_file:
         jsonline = json.loads(line)
         entity = [_ for _ in jsonline.keys()][0]
@@ -23,4 +23,5 @@ with open('data/dbpedia_embeddings_db.json', 'r') as db_file:
 
 
 X = np.array(X)
-mean_score = wv.cosine_similarities(wv['organisation'], X).mean()
+mean_score = wv.cosine_similarities(wv['company'], X).mean()
+print(mean_score)
