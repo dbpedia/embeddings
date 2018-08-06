@@ -1,4 +1,5 @@
 import numpy as np
+from numpy.linalg import norm
 import json
 from gensim.models import FastText
 # from gensim.models import KeyedVectors
@@ -72,7 +73,7 @@ def mean_encoder(description):
     return r.mean(axis=0)
 
 
-def mean_distance_encoder(description):
+def distance_encoder(description):
     """
     Encodes the description using simple vector averaging
 
@@ -138,7 +139,8 @@ def abstract_encoder(label):
 def evaluate():
     global dictionary, wv
     count = 0
-    scores = np.zeros(4)
+    scores = np.zeros(7)
+    cos_scores = np.zeros(7)
     itr = len(dictionary)
     logging.info('running evaluation for {0} samples'.format(itr))
     for key in dictionary:
@@ -160,13 +162,26 @@ def evaluate():
                 try:
                     r = r.mean(axis=0).reshape(1, -1)
                     vec1 = mean_encoder(dictionary[key]).reshape(1, -1)
-                    vec2 = mean_distance_encoder(dictionary[key]).reshape(1, -1)
+                    vec2 = distance_encoder(dictionary[key]).reshape(1, -1)
                     vec3 = title_mean(key).reshape(1, -1)
                     vec4 = abstract_encoder(key).reshape(1, -1)
-                    scores[0] += cosine_similarity(r, vec1)
-                    scores[1] += cosine_similarity(r, vec2)
-                    scores[2] += cosine_similarity(r, vec3)
-                    scores[3] += cosine_similarity(r, vec4)
+                    vec5 = np.random.randn(100).reshape(1, -1)
+                    vec6 = np.zeros(100).reshape(1, -1)
+                    t = wv.similar_by_vector(vec4)
+                    scores[0] += norm(r - vec1)
+                    scores[1] += norm(r - vec2)
+                    scores[2] += norm(r - vec3)
+                    scores[3] += norm(r - vec4)
+                    scores[4] += norm(r - vec5)
+                    scores[5] += norm(r - vec6)
+                    scores[6] += wv.similar_by_vector(vec4)[0][1]
+                    cos_scores[0] += cosine_similarity(r, vec1)
+                    cos_scores[1] += cosine_similarity(r, vec2)
+                    cos_scores[2] += cosine_similarity(r, vec3)
+                    cos_scores[3] += cosine_similarity(r, vec4)
+                    cos_scores[4] += cosine_similarity(r, vec5)
+                    cos_scores[5] += cosine_similarity(r, vec6)
+                    cos_scores[6] += wv.similar_by_vector(vec4)[0][1]
                     count += 1
                 except (ValueError, KeyError) as _:
                     itr -= 1
@@ -174,7 +189,10 @@ def evaluate():
             else:
                 itr -= 1
                 continue
-    print(scores / count)
+    scores = scores / norm(scores)
+    cos_scores = cos_scores / norm(cos_scores)
+    print(scores)
+    print(cos_scores)
 
 
 def main():
