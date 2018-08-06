@@ -2,7 +2,6 @@ import numpy as np
 from numpy.linalg import norm
 import json
 from gensim.models import FastText
-# from gensim.models import KeyedVectors
 import logging
 import sys
 import torch
@@ -19,8 +18,6 @@ dictionary = {}
 model = FastText.load('model/entity_fasttext_n100')
 wv = model.wv
 del model
-# f = '/Volumes/Seagate/SeagateBackupPlus/Github/GSoC2018/glove.6B/glove.6B.100d.txt'
-# glove = KeyedVectors.load_word2vec_format(f)
 
 
 def load_dictionary(dictionary_file):
@@ -136,16 +133,25 @@ def abstract_encoder(label):
         return np.random.randn(100)
 
 
+def print_summary(s):
+    print("INFO : Summary")
+    print("=" * 40)
+    print("Mean vector\t\t|\t{0:.3f}".format(s[0]))
+    print("Mean distance vector\t|\t{0:.3f}".format(s[1]))
+    print("Mean title vector\t|\t{0:.3f}".format(s[2]))
+    print("Encoded vector\t\t|\t{0:.3f}".format(s[3]))
+    print("Random vector\t\t|\t{0:.3f}".format(s[4]))
+    print("Zero vector\t\t|\t{0:.3f}".format(s[5]))
+
+
 def evaluate():
     global dictionary, wv
     count = 0
-    scores = np.zeros(7)
-    cos_scores = np.zeros(7)
+    scores = np.zeros(6)
     itr = len(dictionary)
     logging.info('running evaluation for {0} samples'.format(itr))
     for key in dictionary:
         progress = (count / itr) * 100
-        print('INFO : evaluated {0:.1f} %'.format(progress), end='\r')
         d = dictionary[key].split('resource/')
         d = [idx.split()[0].translate(table).lower() for idx in d[1:]]
         try:
@@ -161,27 +167,18 @@ def evaluate():
             if r.ndim == 2:
                 try:
                     r = r.mean(axis=0).reshape(1, -1)
-                    vec1 = mean_encoder(dictionary[key]).reshape(1, -1)
-                    vec2 = distance_encoder(dictionary[key]).reshape(1, -1)
-                    vec3 = title_mean(key).reshape(1, -1)
-                    vec4 = abstract_encoder(key).reshape(1, -1)
-                    vec5 = np.random.randn(100).reshape(1, -1)
-                    vec6 = np.zeros(100).reshape(1, -1)
-                    t = wv.similar_by_vector(vec4)
-                    scores[0] += norm(r - vec1)
-                    scores[1] += norm(r - vec2)
-                    scores[2] += norm(r - vec3)
-                    scores[3] += norm(r - vec4)
-                    scores[4] += norm(r - vec5)
-                    scores[5] += norm(r - vec6)
-                    scores[6] += wv.similar_by_vector(vec4)[0][1]
-                    cos_scores[0] += cosine_similarity(r, vec1)
-                    cos_scores[1] += cosine_similarity(r, vec2)
-                    cos_scores[2] += cosine_similarity(r, vec3)
-                    cos_scores[3] += cosine_similarity(r, vec4)
-                    cos_scores[4] += cosine_similarity(r, vec5)
-                    cos_scores[5] += cosine_similarity(r, vec6)
-                    cos_scores[6] += wv.similar_by_vector(vec4)[0][1]
+                    mean_vec = mean_encoder(dictionary[key]).reshape(1, -1)
+                    mean_dist_vec = distance_encoder(dictionary[key]).reshape(1, -1)
+                    title_vec = title_mean(key).reshape(1, -1)
+                    abstract_vec = abstract_encoder(key).reshape(1, -1)
+                    random_vec = np.random.randn(100).reshape(1, -1)
+                    zero_vec = np.zeros(100).reshape(1, -1)
+                    scores[0] += norm(r - mean_vec)
+                    scores[1] += norm(r - mean_dist_vec)
+                    scores[2] += norm(r - title_vec)
+                    scores[3] += norm(r - abstract_vec)
+                    scores[4] += norm(r - random_vec)
+                    scores[5] += norm(r - zero_vec)
                     count += 1
                 except (ValueError, KeyError) as _:
                     itr -= 1
@@ -190,9 +187,7 @@ def evaluate():
                 itr -= 1
                 continue
     scores = scores / norm(scores)
-    cos_scores = cos_scores / norm(cos_scores)
-    print(scores)
-    print(cos_scores)
+    print_summary(scores)
 
 
 def main():
