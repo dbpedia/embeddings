@@ -102,3 +102,9 @@ ENV/
 
 # Resource fork
 ._*
+
+# Other resources
+data
+data/
+model
+model/
