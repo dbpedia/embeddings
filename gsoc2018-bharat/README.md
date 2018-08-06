@@ -7,7 +7,7 @@ This project aims to generate complex word embeddings for Out-Of-Vocabulary enti
 Here is how you can start training and testing the model yourself. First, clone the repository on your local machine. I assume you are familiar with Git, and have it installed on your system prior to using this repo.
 
 ```shell
-$ git clone git@github.com:tramplingWillow/embeddings.git
+$ git clone git@github.com:dbpedia/embeddings.git
 $ cd embeddings/gsoc2018-bharat
 ```
 
