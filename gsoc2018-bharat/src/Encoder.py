@@ -27,7 +27,6 @@ class DescriptionEncoder(nn.Module):
         self.seq_len = seq_len
         self.num_layers = num_layers
         self.inp = nn.Linear(embed_size, hidden_size)
-        # self.gru = nn.GRU(hidden_size, hidden_size, 2)
         self.lstm = nn.LSTM(hidden_size, hidden_size // 2, 1,
                             batch_first=True)
         self.rnn = nn.RNN(hidden_size // 2, hidden_size,
@@ -38,9 +37,6 @@ class DescriptionEncoder(nn.Module):
         if hidden is None:
             hidden = self.init_hidden()
         inp_desc = self.inp(inp_desc)
-        # output, hidden = self.rnn(self.lstm(inp_desc)[0])
-        # output, hidden = self.rnn(self.lstm(self.gru(inp_desc)[0])[0])
-        # output, hidden = self.lstm(inp_desc)
         output, hidden = self.rnn(self.lstm(inp_desc)[0])
         output = self.out(output)
 
