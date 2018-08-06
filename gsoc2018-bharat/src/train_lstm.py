@@ -67,14 +67,6 @@ def create_mappings(saved_model_file, saved_descriptions_file):
             except (IndexError, KeyError) as _:
                 continue
 
-    # logging.info('resources read into np stack : {0}'.format(count))
-    # entities = list(map(lambda x: [_ for _ in x.keys()][0], lines))
-    # abstracts = [l[ent] for l, ent in zip(lines, entities)]
-    # entities = [np.array(wv.get_vector(ent),
-    #                      dtype=np.float32) for ent in entities]
-    # abstracts = [np.array(list(map(lambda x: wv.get_vector(x),
-    #                                desc.split())),
-    #                       dtype=np.float32) for desc in abstracts]
 
     logging.info(f'{len(abstracts)} mappings generated')
 
@@ -117,7 +109,6 @@ def train(x, y, wv, model, epochs, abstracts_file):
     itr = len(inputs)
     progress = 0.0
     criterion = nn.CosineEmbeddingLoss()
-    # criterion = nn.MSELoss()
     optimizer = optim.SGD(model.parameters(), lr=0.2)
     count = 0
     itr_p = 0.0
@@ -139,13 +130,10 @@ def train(x, y, wv, model, epochs, abstracts_file):
                     Variable(torch.tensor([[word]])),
                     hidden)
             optimizer.zero_grad()
-            # loss = criterion(output[0][0],
-            #                  Variable(torch.tensor(l)))
             loss = criterion(output[0],
                              Variable(torch.tensor([l])),
                              flags)
             loss.backward(retain_graph=True)
-            # loss.backward()
             optimizer.step()
         logging.info(
             'completed epoch {0}, loss : {1}'.format(epoch + 1, loss.item()))
@@ -153,11 +141,11 @@ def train(x, y, wv, model, epochs, abstracts_file):
     logging.info('saving the model to model/description_encoder')
     torch.save(model, 'model/description_encoder')
     validate(model, wv, abstracts_file)
-    # plt.plot(losses)
-    # plt.title('Model Loss')
-    # plt.ylabel('loss')
-    # plt.xlabel('epoch')
-    # plt.show()
+    plt.plot(losses)
+    plt.title('Model Loss')
+    plt.ylabel('loss')
+    plt.xlabel('epoch')
+    plt.show()
 
 
 def validate(model, wv, abstracts_file):
@@ -166,7 +154,6 @@ def validate(model, wv, abstracts_file):
     with open(abstracts_file, 'r') as input_file:
         with open('data/validate_output', 'w+') as output_file:
             for line in input_file:
-                # line = next(input_file)
                 json_line = json.loads(line)
                 target = [_ for _ in json_line.keys()][0]
                 d = json_line[target]
@@ -192,7 +179,6 @@ def validate(model, wv, abstracts_file):
                     print(wv.similar_by_vector(p))
                     output_file.write(target + '\n')
                     output_file.write(d)
-                    # output_file.write(str(wv.similar_by_vector(p)) + '\n')
                     output_file.write(str(p) + '\n')
                     break
 
