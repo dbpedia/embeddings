@@ -37,10 +37,7 @@ async def fetch_data(q, i):
     print(f'INFO : sending request # {i + 1}')
     sparql.setQuery(q)
     sparql.setReturnFormat(JSON)
-    # try:
     results = sparql.query().convert()
-    # except (HTTPError, EndPointInternalError) as _:
-    #     fetch_data(q, i)
 
     data = results['results']['bindings']
     final_pool = final_pool + data
