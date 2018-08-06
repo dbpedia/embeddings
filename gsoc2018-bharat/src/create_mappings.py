@@ -50,7 +50,8 @@ def main(saved_model, descriptions_file):
                 entities.append(v)
                 abstracts.append(t)
                 count += 1
-            except (IndexError, KeyError) as _:
+            except (IndexError, KeyError) as e:
+                log.info(e)
                 continue
     logging.info('resources read into np stack of length : {0}'.format(count))
     entities = np.stack(entities)
