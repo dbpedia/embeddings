@@ -2,14 +2,16 @@ import numpy as np
 from sklearn.manifold import TSNE
 import matplotlib.pyplot as plt
 import json
+import sys
 
 
+db_file = sys.argv[1]
 X = []
 lines = set()
 dictionary = {}
 labels = []
-with open('data/person_db.json', 'r') as db_file:
-    for line in db_file:
+with open(db_file, 'r') as f:
+    for line in f:
         jsonline = json.loads(line)
         dictionary.update(jsonline)
         lines.add([_ for _ in jsonline.keys()][0])
