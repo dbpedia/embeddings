@@ -53,8 +53,6 @@ def main(saved_model, descriptions_file):
             except (IndexError, KeyError) as _:
                 continue
     logging.info('resources read into np stack of length : {0}'.format(count))
-
-    # Currently the process is killed here because of memory pressure.
     entities = np.stack(entities)
     abstracts = np.stack(abstracts)
     logging.info('saving entity embeddings to data/entity.npy')
