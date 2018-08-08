@@ -5,7 +5,7 @@ from gensim.models import FastText
 import logging
 import sys
 import torch
-import Encoder
+import encoder
 from torch.autograd import Variable
 from sklearn.metrics.pairwise import cosine_similarity
 
