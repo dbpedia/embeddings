@@ -3,7 +3,7 @@ from gensim.models import FastText
 import torch
 from torch.autograd import Variable
 import numpy as np
-import Encoder
+import encoder
 import logging
 import sys
 
