@@ -110,3 +110,7 @@ As an added metric of evaluation besides the plots, I have used a rather differe
 ```
 $ python src/evaluate.py {annotated_abstract_file}
 ```
+
+### Important Links to track the progress
+
+I wrote a [blog](https://bharatsuri.blogspot.com/) during the program and you can have a look at the entire progress [here](https://bharatsuri.blogspot.com/p/my-progress.html). I have also included the results from plotting the embeddings, and the evaluation metric in the progress page.
