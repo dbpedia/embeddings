@@ -133,8 +133,8 @@ def abstract_encoder(label):
         return np.random.randn(100)
 
 
-def print_summary(s):
-    print("INFO : Summary")
+def print_summary(s, ss):
+    print("\nINFO : Similarity")
     print("=" * 40)
     print("Mean vector\t\t|\t{0:.3f}".format(s[0]))
     print("Mean distance vector\t|\t{0:.3f}".format(s[1]))
@@ -142,12 +142,21 @@ def print_summary(s):
     print("Encoded vector\t\t|\t{0:.3f}".format(s[3]))
     print("Random vector\t\t|\t{0:.3f}".format(s[4]))
     print("Zero vector\t\t|\t{0:.3f}".format(s[5]))
+    print("\nINFO : Scores")
+    print("=" * 40)
+    print("Mean vector\t\t|\t{0:.3f}".format(ss[0]))
+    print("Mean distance vector\t|\t{0:.3f}".format(ss[1]))
+    print("Mean title vector\t|\t{0:.3f}".format(ss[2]))
+    print("Encoded vector\t\t|\t{0:.3f}".format(ss[3]))
+    print("Random vector\t\t|\t{0:.3f}".format(ss[4]))
+    print("Zero vector\t\t|\t{0:.3f}".format(ss[5]))
 
 
 def evaluate():
     global dictionary, wv
     count = 0
     scores = np.zeros(6)
+    similar = np.zeros(6)
     itr = len(dictionary)
     logging.info('running evaluation for {0} samples'.format(itr))
     for key in dictionary:
@@ -167,10 +176,16 @@ def evaluate():
             if r.ndim == 2:
                 try:
                     r = r.mean(axis=0).reshape(1, -1)
-                    mean_vec = mean_encoder(dictionary[key]).reshape(1, -1)
-                    mean_dist_vec = distance_encoder(dictionary[key]).reshape(1, -1)
-                    title_vec = title_mean(key).reshape(1, -1)
-                    abstract_vec = abstract_encoder(key).reshape(1, -1)
+                    mean_vec = mean_encoder(dictionary[key])
+                    mean_vec = mean_vec.reshape(1, -1) / norm(mean_vec)
+                    mean_dist_vec = distance_encoder(dictionary[key])
+                    mean_dist_vec = mean_dist_vec.reshape(1, -1)
+                    mean_dist_vec = mean_dist_vec / norm(mean_dist_vec)
+                    title_vec = title_mean(key)
+                    title_vec = title_vec.reshape(1, -1) / norm(title_vec)
+                    abstract_vec = abstract_encoder(key)
+                    abstract_vec = abstract_vec.reshape(1, -1)
+                    abstract_vec = abstract_vec / norm(abstract_vec)
                     random_vec = np.random.randn(100).reshape(1, -1)
                     zero_vec = np.zeros(100).reshape(1, -1)
                     scores[0] += norm(r - mean_vec)
@@ -179,7 +194,14 @@ def evaluate():
                     scores[3] += norm(r - abstract_vec)
                     scores[4] += norm(r - random_vec)
                     scores[5] += norm(r - zero_vec)
+                    similar[0] += cosine_similarity(r, mean_vec)
+                    similar[1] += cosine_similarity(r, mean_dist_vec)
+                    similar[2] += cosine_similarity(r, title_vec)
+                    similar[3] += cosine_similarity(r, abstract_vec)
+                    similar[4] += cosine_similarity(r, random_vec)
+                    similar[5] += cosine_similarity(r, zero_vec)
                     count += 1
+                    print(count, end='\r')
                 except (ValueError, KeyError) as _:
                     itr -= 1
                     continue
@@ -187,7 +209,8 @@ def evaluate():
                 itr -= 1
                 continue
     scores = scores / norm(scores)
-    print_summary(scores)
+    similar = similar / norm(similar)
+    print_summary(scores, similar)
 
 
 def main():
