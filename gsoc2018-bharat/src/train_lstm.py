@@ -12,7 +12,7 @@ import sys
 import argparse
 import matplotlib.pyplot as plt
 
-from Encoder import DescriptionEncoder
+from encoder import DescriptionEncoder
 
 torch.manual_seed(1)
 
