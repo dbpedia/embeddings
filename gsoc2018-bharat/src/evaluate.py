@@ -153,8 +153,15 @@ def print_summary(s, ss):
 
 
 def evaluate():
+    """
+    This method calls all the other methods
+    to obtain the embedding for all entities
+    with the help of their abstracts and compute
+    their vectors on-the-fly.
+    """
     global dictionary, wv
     count = 0
+    # To save the scores by distance and similarity
     scores = np.zeros(6)
     similar = np.zeros(6)
     itr = len(dictionary)
@@ -175,7 +182,11 @@ def evaluate():
         else:
             if r.ndim == 2:
                 try:
+                    # Mean of vector containing all word vectors
+                    # obtained from abstract.
                     r = r.mean(axis=0).reshape(1, -1)
+                    
+                    # Obtain the vectors for the entity
                     mean_vec = mean_encoder(dictionary[key])
                     mean_vec = mean_vec.reshape(1, -1) / norm(mean_vec)
                     mean_dist_vec = distance_encoder(dictionary[key])
@@ -188,6 +199,8 @@ def evaluate():
                     abstract_vec = abstract_vec / norm(abstract_vec)
                     random_vec = np.random.randn(100).reshape(1, -1)
                     zero_vec = np.zeros(100).reshape(1, -1)
+                    
+                    # Score the entity vectors
                     scores[0] += norm(r - mean_vec)
                     scores[1] += norm(r - mean_dist_vec)
                     scores[2] += norm(r - title_vec)
@@ -208,6 +221,8 @@ def evaluate():
             else:
                 itr -= 1
                 continue
+    # Normalize the scores to get a better
+    # comparison against the baselines.
     scores = scores / norm(scores)
     similar = similar / norm(similar)
     print_summary(scores, similar)
