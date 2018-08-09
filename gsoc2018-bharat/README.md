@@ -87,3 +87,26 @@ $ python src/train_lstm.py -e 50
 $ python src/train_lstm.py -m {saved_model} -e 10 -s 300
 ```
 Execute the command without any additional arguments to run the script with the default values.
+
+### Encoding and generating database of embeddings
+
+Now that the model is able to encode an input abstract and output one single embedding, we can use the model to generate embeddings for all the abstracts.
+```
+$ python src/create_db.py {input_abstract_file} {output_embeddings_db}
+```
+The script takes in two arguments, and uses these files to read the abstracts, encode them and store the predicted embeddings in JSON format.
+
+### Plotting the embeddings
+
+Once you generate the embeddings, you can plot them by using the script that uses t-SNE for dimensionality reduction. The script takes in the db_file as input and plots the entity vectors with the corresponding entities as labels.
+```
+$ python src/tsne.py {db_file}
+```
+
+### Evaluation
+
+As an added metric of evaluation besides the plots, I have used a rather different approach to see how well the encoded vectors glean the semantics of the textual data provided in the form of abstract. For this purpose, I used a dictionary that contained annotated text for abstracts, and then by measuring the similarity between the two vectors I was able to run some baselines. These were the vectors predicted by encoding the abstract, finding the averaged vector of the entire abstract, averaged vector of the words in the entity label, using zero vector and using a random vector for representing an OOV entity.
+
+```
+$ python src/evaluate.py {annotated_abstract_file}
+```
