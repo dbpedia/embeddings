@@ -414,7 +414,7 @@ After plotting, I found the closest curve which fits the data is that of a ployn
 <h2> Code and Contribution </h2>
 You can find all the code contribution (new codes/ updated codes) information from this patch <a href="https://github.com/nausheenfatma/embeddings/blob/master/gsoc2017-nausheen/contribution_patch.patch ">file</a>.
 
-You can download the 1 million DBpedia dataset for training, and the final DistMult embeddings from <a href="http://tsoru.aksw.org/DBp1m/">here</a> (please try refreshing the link if it is not working).
+You can download the 1 million DBpedia dataset for training, and the final DistMult embeddings from <a href="https://s3.eu-west-2.amazonaws.com/tsoru.aksw.org/DBp1m">here</a> (please try refreshing the link if it is not working).
 
 <h2>Future Work</h2>
 
