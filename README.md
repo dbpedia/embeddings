@@ -5,8 +5,9 @@ Knowledge Graph Embeddings for DBpedia.
 ## Models
 
 * [English DBpedia 2015-10](https://s3.eu-west-2.amazonaws.com/tsoru.aksw.org/kg2vec/dbpedia.bin) obtained using [KG2Vec](https://github.com/AKSW/KG2Vec/)
-* [English DBpedia 2016-04](https://ndownloader.figshare.com/files/12498953) obtained using [RDF2Vec](https://datalab.rwth-aachen.de/embedding/RDF2Vec/)
-* [English DBpedia 2016-04](https://ndownloader.figshare.com/files/12498641) obtained using [KGloVe](https://datalab.rwth-aachen.de/embedding/KGloVe/)
+* [English DBpedia 2015-10](http://data.dws.informatik.uni-mannheim.de/rdf2vec/models/DBpedia/2015-10/) obtained using [RDF2Vec](http://rdf2vec.org/)
+* [English DBpedia 2016-04](http://data.dws.informatik.uni-mannheim.de/rdf2vec/models/DBpedia/2016-04/) obtained using [KGloVe](https://datalab.rwth-aachen.de/embedding/KGloVe/)
+* [English DBpedia 2015-04](http://data.dws.informatik.uni-mannheim.de/kgvec2go/dbpedia/) obtained using [KGvec2go](http://kgvec2go.org/)
 
 ## Google Summer of Code
 
